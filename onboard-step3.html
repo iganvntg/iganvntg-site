@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Go Live — IGAN VNTG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --c-bg:#F7F5F1;--c-surface:#F0EDE7;--c-fg:#1A1917;--c-fg-2:#8A857D;--c-fg-3:#B8B3AB;
+  --c-border:#E0DAD1;--c-border-2:#C8C1B6;--c-green:#166534;--c-green-bg:#F0FDF4;
+  --c-green-border:#86EFAC;
+  --f-serif:'Cormorant Garamond',Georgia,serif;--f-sans:'Jost','Helvetica Neue',sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:4px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;-webkit-font-smoothing:antialiased}
+body{background:var(--c-bg);color:var(--c-fg);font-family:var(--f-sans);font-weight:300;line-height:1.6;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+.page{display:grid;grid-template-columns:1fr 420px;min-height:100vh}
+@media(max-width:900px){.page{grid-template-columns:1fr}}
+
+.sidebar{background:var(--c-fg);color:var(--c-bg);padding:48px 40px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+@media(max-width:900px){.sidebar{display:none}}
+.sidebar-logo{font-size:11px;font-weight:200;letter-spacing:.42em;word-spacing:.5em;text-transform:uppercase;opacity:.9}
+.sidebar-profile{margin-top:48px;padding:24px;background:rgba(247,245,241,.06);border-radius:var(--r);border:1px solid rgba(247,245,241,.1)}
+.profile-avatar{width:52px;height:52px;border-radius:50%;background:rgba(247,245,241,.15);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:400;letter-spacing:.04em;margin-bottom:14px}
+.profile-name{font-family:var(--f-serif);font-style:italic;font-weight:300;font-size:1.5rem;color:var(--c-bg);margin-bottom:4px}
+.profile-city{font-size:12px;opacity:.5;margin-bottom:16px}
+.profile-tags{display:flex;flex-wrap:wrap;gap:5px}
+.profile-tag{background:rgba(247,245,241,.1);border-radius:2px;padding:3px 9px;font-size:10px;letter-spacing:.06em;opacity:.75}
+.sidebar-checklist{margin-top:32px;display:flex;flex-direction:column;gap:10px}
+.check-item{display:flex;gap:10px;align-items:flex-start;font-size:12px;opacity:.7}
+.check-item.done{opacity:1}
+.check-circle{width:18px;height:18px;border-radius:50%;border:1px solid rgba(247,245,241,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px}
+.check-item.done .check-circle{background:var(--c-green);border-color:var(--c-green);color:#fff}
+
+.form-panel{padding:48px 40px 80px;overflow-y:auto}
+@media(max-width:900px){.form-panel{padding:32px 20px 60px}}
+.form-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px}
+.form-back{font-size:11px;font-weight:300;letter-spacing:.08em;text-transform:uppercase;color:var(--c-fg-2);transition:color 200ms}
+.form-back:hover{color:var(--c-fg)}
+.form-step-label{font-size:11px;color:var(--c-fg-3);letter-spacing:.06em}
+
+.progress-track{display:flex;gap:4px;margin-bottom:36px}
+.progress-seg{height:2px;border-radius:1px;flex:1;background:var(--c-border);transition:background 400ms var(--ease)}
+.progress-seg.done{background:var(--c-fg)}
+
+.form-title{font-size:22px;font-weight:400;margin-bottom:6px;letter-spacing:-.01em}
+.form-sub{font-size:13px;color:var(--c-fg-2);margin-bottom:32px;line-height:1.65}
+
+.review-card{background:#fff;border:1px solid var(--c-border);border-radius:var(--r);overflow:hidden;margin-bottom:14px}
+.review-section{padding:16px 18px;border-bottom:1px solid var(--c-border);display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.review-section:last-child{border-bottom:none}
+.review-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:6px}
+.review-value{font-size:14px;font-weight:400}
+.review-value-sm{font-size:13px;color:var(--c-fg)}
+.review-edit{font-size:11px;color:var(--c-fg-2);border-bottom:1px solid currentColor;cursor:pointer;flex-shrink:0;padding-top:2px;transition:color 200ms}
+.review-edit:hover{color:var(--c-fg)}
+
+.sync-banner{background:var(--c-green-bg);border:1px solid var(--c-green-border);border-radius:var(--r);padding:14px 16px;display:flex;gap:10px;align-items:flex-start;margin-bottom:20px;font-size:13px;color:var(--c-green)}
+.sync-banner-body p+p{margin-top:4px}
+
+.tag{background:var(--c-fg);color:#fff;border-radius:2px;padding:2px 8px;font-size:11px;display:inline-block;margin:2px}
+
+input[type=text]{
+  width:100%;padding:10px 12px;border:1px solid var(--c-border);border-radius:var(--r);
+  background:#fff;color:var(--c-fg);font-size:14px;font-weight:300;
+  outline:none;transition:border-color 200ms;
+}
+input:focus{border-color:var(--c-fg);box-shadow:0 0 0 3px rgba(26,25,23,.06)}
+label{display:block;font-size:11px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:6px}
+
+.terms-note{font-size:11px;color:var(--c-fg-3);line-height:1.65;margin-bottom:20px}
+.terms-note a{border-bottom:1px solid currentColor}
+
+.btn-go-live{
+  width:100%;background:var(--c-fg);color:#fff;border:none;border-radius:var(--r);
+  padding:15px 24px;font-family:var(--f-sans);font-size:14px;font-weight:400;
+  letter-spacing:.06em;cursor:pointer;transition:opacity 200ms;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+}
+.btn-go-live:hover{opacity:.85}
+
+/* Confirmation screen */
+.confirm{display:none;text-align:center;padding:20px 0}
+.confirm-check{width:64px;height:64px;border-radius:50%;background:var(--c-green-bg);border:1px solid var(--c-green-border);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:28px;color:var(--c-green)}
+.confirm-title{font-family:var(--f-serif);font-style:italic;font-weight:300;font-size:2.2rem;line-height:1.1;margin-bottom:12px;letter-spacing:-.01em}
+.confirm-sub{font-size:14px;color:var(--c-fg-2);line-height:1.75;max-width:340px;margin:0 auto 28px}
+.confirm-detail{background:var(--c-surface);border-radius:var(--r);padding:16px;text-align:left;margin-bottom:24px}
+.confirm-detail-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--c-border);font-size:13px}
+.confirm-detail-row:last-child{border-bottom:none}
+.confirm-detail-label{color:var(--c-fg-2)}
+.confirm-detail-val{font-weight:400}
+.btn-profile{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--c-fg);color:#fff;border:none;border-radius:var(--r);
+  padding:12px 24px;font-family:var(--f-sans);font-size:13px;font-weight:400;
+  letter-spacing:.04em;cursor:pointer;transition:opacity 200ms;text-decoration:none;
+}
+.btn-profile:hover{opacity:.8}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- SIDEBAR — profile preview -->
+  <div class="sidebar">
+    <div>
+      <div class="sidebar-logo">IGAN VNTG</div>
+      <div class="sidebar-profile" id="sidebar-profile">
+        <div class="profile-avatar" id="sp-initials">—</div>
+        <div class="profile-name" id="sp-name">Your boutique</div>
+        <div class="profile-city" id="sp-city">—</div>
+        <div class="profile-tags" id="sp-tags"></div>
+      </div>
+      <div class="sidebar-checklist">
+        <div class="check-item done" id="chk-info">
+          <div class="check-circle">✓</div>
+          <span>Boutique info saved</span>
+        </div>
+        <div class="check-item done" id="chk-inv">
+          <div class="check-circle">✓</div>
+          <span id="chk-inv-label">Inventory connected</span>
+        </div>
+        <div class="check-item" id="chk-live">
+          <div class="check-circle"></div>
+          <span>Profile goes live</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM PANEL -->
+  <div class="form-panel">
+    <div class="form-header">
+      <a href="onboard-step2.html" class="form-back">← Back</a>
+      <span class="form-step-label">Step 3 of 3</span>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-seg done"></div>
+      <div class="progress-seg done"></div>
+      <div class="progress-seg done"></div>
+    </div>
+
+    <div id="review-form">
+      <h1 class="form-title">Review & go live</h1>
+      <p class="form-sub">Everything looks good. Confirm your details and your boutique goes live immediately.</p>
+
+      <div id="sync-status-banner"></div>
+
+      <div class="review-card">
+        <div class="review-section">
+          <div style="flex:1">
+            <div class="review-label">Boutique</div>
+            <div class="review-value" id="rv-name">—</div>
+            <div class="review-value-sm" id="rv-city" style="margin-top:2px;color:var(--c-fg-2)">—</div>
+          </div>
+          <a href="onboard-step1.html" class="review-edit">Edit</a>
+        </div>
+        <div class="review-section">
+          <div style="flex:1">
+            <div class="review-label">Contact</div>
+            <div class="review-value-sm" id="rv-email">—</div>
+          </div>
+          <a href="onboard-step1.html" class="review-edit">Edit</a>
+        </div>
+        <div class="review-section" id="rv-designers-section">
+          <div style="flex:1">
+            <div class="review-label">Designers</div>
+            <div id="rv-designers">—</div>
+          </div>
+          <a href="onboard-step1.html" class="review-edit">Edit</a>
+        </div>
+        <div class="review-section">
+          <div style="flex:1">
+            <div class="review-label">Inventory</div>
+            <div class="review-value-sm" id="rv-inv">—</div>
+          </div>
+          <a href="onboard-step2.html" class="review-edit">Edit</a>
+        </div>
+      </div>
+
+      <div style="margin-bottom:18px">
+        <label for="b-desc">Brief description (optional)</label>
+        <input type="text" id="b-desc" placeholder="e.g. Curated vintage from the 1990s through 2010s — Chanel, Hermès, and archive European fashion."/>
+        <p style="font-size:11px;color:var(--c-fg-3);margin-top:5px">This appears on your boutique profile. 1–2 sentences. You can update it any time.</p>
+      </div>
+
+      <p class="terms-note">
+        By going live you confirm you are authorised to list this inventory and agree to IGAN VNTG's
+        <a href="#">Boutique Terms</a>. We never own or claim your inventory.
+        Buyers are directed to your own checkout.
+      </p>
+
+      <button class="btn-go-live" onclick="goLive()">
+        <span>Go live</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+
+    <!-- CONFIRMATION -->
+    <div class="confirm" id="confirm-screen">
+      <div class="confirm-check">✓</div>
+      <h1 class="confirm-title">You're live.</h1>
+      <p class="confirm-sub">Your boutique is indexed and searchable. Google starts crawling your pages now. Buyers who search for what you carry can find you.</p>
+      <div class="confirm-detail" id="confirm-detail"></div>
+      <a href="boutique-dashboard.html" class="btn-profile">Go to your dashboard →</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+'use strict';
+var data={};
+try{data=JSON.parse(localStorage.getItem('igan_onboard')||'{}')}catch(e){}
+
+function initials(name){
+  if(!name)return'??';
+  var words=name.trim().split(/\s+/);
+  if(words.length===1)return words[0].slice(0,2).toUpperCase();
+  return(words[0][0]+(words[words.length-1][0])).toUpperCase();
+}
+
+/* Populate sidebar */
+document.getElementById('sp-initials').textContent=initials(data.name||'');
+document.getElementById('sp-name').textContent=data.name||'Your boutique';
+document.getElementById('sp-city').textContent=(data.city||'')+(data.country?', '+data.country:'');
+if(data.designers&&data.designers.length){
+  document.getElementById('sp-tags').innerHTML=data.designers.slice(0,5).map(function(d){
+    return'<span class="profile-tag">'+d+'</span>'
+  }).join('');
+}
+
+/* Populate review */
+document.getElementById('rv-name').textContent=data.name||'—';
+document.getElementById('rv-city').textContent=(data.city||'')+(data.country?', '+data.country:'');
+document.getElementById('rv-email').textContent=data.email||'—';
+
+if(data.designers&&data.designers.length){
+  document.getElementById('rv-designers').innerHTML=data.designers.map(function(d){
+    return'<span class="tag">'+d+'</span>'
+  }).join('');
+}
+
+var invDesc='—';
+if(data.inv_system==='shopify'){
+  invDesc='Shopify — '+( data.shopify_url||'')+(data.connected?' · '+(data.product_count||0)+' products synced':'');
+}else if(data.inv_system==='woocommerce'){invDesc='WooCommerce — CSV import'}
+else if(data.inv_system==='none'){invDesc='Manual — team will reach out'}
+else{invDesc='Other platform — CSV import'}
+document.getElementById('rv-inv').textContent=invDesc;
+
+if(data.connected&&data.product_count){
+  var b=document.getElementById('sync-status-banner');
+  b.innerHTML='<div class="sync-banner"><div style="font-size:18px;flex-shrink:0">✓</div><div class="sync-banner-body"><p><strong>'+data.product_count+' products are already live.</strong></p><p>They became searchable the moment Shopify connected. Sold items will disappear automatically within 15 minutes of selling.</p></div></div>';
+  document.getElementById('chk-inv-label').textContent=data.product_count+' products synced';
+}
+
+function goLive(){
+  data.live=true;
+  data.live_at=new Date().toISOString();
+  data.description=document.getElementById('b-desc').value.trim();
+  localStorage.setItem('igan_onboard',JSON.stringify(data));
+
+  document.getElementById('review-form').style.display='none';
+  var c=document.getElementById('confirm-screen');
+  c.style.display='block';
+
+  /* Mark checklist */
+  document.getElementById('chk-live').classList.add('done');
+  document.getElementById('chk-live').querySelector('.check-circle').textContent='✓';
+
+  /* Confirm detail */
+  var rows=[
+    ['Boutique',data.name||'—'],
+    ['City',data.city||'—'],
+    ['Profile URL','iganvntg.com/boutiques/'+((data.country||'ca').toLowerCase())+'/'+(data.city||'').toLowerCase().replace(/\s+/g,'-')+'/'+(data.name||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'')],
+    data.connected?['Products live',data.product_count||0]:['Inventory','Setup pending — we\'ll reach out'],
+    ['Next sync','Every 15 minutes (automatic)'],
+    ['Login email','Sent to '+data.email]
+  ];
+  document.getElementById('confirm-detail').innerHTML=rows.map(function(r){
+    return'<div class="confirm-detail-row"><span class="confirm-detail-label">'+r[0]+'</span><span class="confirm-detail-val">'+r[1]+'</span></div>'
+  }).join('');
+}
+</script>
+</body>
+</html>

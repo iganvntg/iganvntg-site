@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Join IGAN VNTG — Your Boutique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --c-bg:#F7F5F1;--c-surface:#F0EDE7;--c-fg:#1A1917;--c-fg-2:#8A857D;--c-fg-3:#B8B3AB;
+  --c-border:#E0DAD1;--c-border-2:#C8C1B6;--c-green:#166534;--c-green-bg:#F0FDF4;
+  --c-red:#991B1B;--c-red-bg:#FEF2F2;
+  --f-serif:'Cormorant Garamond',Georgia,serif;--f-sans:'Jost','Helvetica Neue',sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:4px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;-webkit-font-smoothing:antialiased}
+body{background:var(--c-bg);color:var(--c-fg);font-family:var(--f-sans);font-weight:300;line-height:1.6;min-height:100vh}
+a{color:inherit;text-decoration:none}
+input,select,textarea,button{font-family:var(--f-sans)}
+
+/* Layout */
+.page{display:grid;grid-template-columns:1fr 420px;min-height:100vh}
+@media(max-width:900px){.page{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+
+/* Left — value reminder */
+.sidebar{background:var(--c-fg);color:var(--c-bg);padding:48px 40px;display:flex;flex-direction:column;justify-content:space-between;position:sticky;top:0;height:100vh;overflow:hidden}
+@media(max-width:900px){.sidebar{position:static;height:auto;padding:32px 24px}}
+.sidebar-logo{font-size:11px;font-weight:200;letter-spacing:.42em;word-spacing:.5em;text-transform:uppercase;opacity:.9}
+.sidebar-headline{font-family:var(--f-serif);font-style:italic;font-weight:300;font-size:clamp(2rem,3.5vw,3rem);line-height:1.1;color:var(--c-bg);margin:48px 0 32px}
+@media(max-width:900px){.sidebar-headline{font-size:2rem;margin:24px 0 20px}}
+.sidebar-points{list-style:none;display:flex;flex-direction:column;gap:20px}
+.sidebar-point{display:flex;gap:14px;align-items:flex-start}
+.sidebar-point-num{font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.4;padding-top:2px;flex-shrink:0}
+.sidebar-point-text{font-size:13px;font-weight:300;line-height:1.7;opacity:.8}
+.sidebar-note{font-size:11px;opacity:.35;letter-spacing:.04em;margin-top:auto;padding-top:32px}
+@media(max-width:900px){.sidebar-points{display:none}.sidebar-note{display:none}.sidebar-headline{margin-bottom:0}}
+
+/* Right — form */
+.form-panel{padding:48px 40px 80px;overflow-y:auto}
+@media(max-width:900px){.form-panel{padding:32px 20px 60px}}
+
+.form-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px}
+.form-back{font-size:11px;font-weight:300;letter-spacing:.08em;text-transform:uppercase;color:var(--c-fg-2);transition:color 200ms var(--ease)}
+.form-back:hover{color:var(--c-fg)}
+.form-step-label{font-size:11px;color:var(--c-fg-3);letter-spacing:.06em}
+
+/* Progress track */
+.progress-track{display:flex;gap:4px;margin-bottom:36px}
+.progress-seg{height:2px;border-radius:1px;flex:1;background:var(--c-border);transition:background 400ms var(--ease)}
+.progress-seg.done{background:var(--c-fg)}
+
+.form-title{font-size:22px;font-weight:400;margin-bottom:6px;letter-spacing:-.01em}
+.form-sub{font-size:13px;color:var(--c-fg-2);margin-bottom:32px;line-height:1.65}
+
+/* Fields */
+.field{margin-bottom:18px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:540px){.field-row{grid-template-columns:1fr}}
+label{display:block;font-size:11px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:6px}
+.req{color:#dc2626;margin-left:2px}
+input[type=text],input[type=email],input[type=url],select{
+  width:100%;padding:10px 12px;
+  border:1px solid var(--c-border);border-radius:var(--r);
+  background:#fff;color:var(--c-fg);font-size:14px;font-weight:300;
+  outline:none;transition:border-color 200ms var(--ease),box-shadow 200ms var(--ease);
+  -webkit-appearance:none;appearance:none;
+}
+input:focus,select:focus{border-color:var(--c-fg);box-shadow:0 0 0 3px rgba(26,25,23,.06)}
+input.error{border-color:#dc2626}
+.field-hint{font-size:11px;color:var(--c-fg-3);margin-top:5px}
+.field-error{font-size:11px;color:#dc2626;margin-top:5px;display:none}
+.field-error.show{display:block}
+
+/* Tag input */
+.tag-wrap{border:1px solid var(--c-border);border-radius:var(--r);padding:7px 8px;background:#fff;min-height:44px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;cursor:text;transition:border-color 200ms var(--ease)}
+.tag-wrap:focus-within{border-color:var(--c-fg)}
+.tag{background:var(--c-fg);color:#fff;border-radius:2px;padding:3px 8px;font-size:11px;display:inline-flex;align-items:center;gap:6px}
+.tag-x{cursor:pointer;opacity:.55;font-size:14px;line-height:1;transition:opacity 150ms}
+.tag-x:hover{opacity:1}
+.tag-wrap input{border:none;background:transparent;outline:none;font-size:13px;min-width:100px;flex:1;color:var(--c-fg);font-family:var(--f-sans);font-weight:300}
+.tag-suggest{position:absolute;z-index:100;background:#fff;border:1px solid var(--c-border);border-radius:var(--r);box-shadow:0 4px 16px rgba(0,0,0,.08);max-height:160px;overflow-y:auto;width:240px;display:none}
+.tag-suggest.open{display:block}
+.tag-suggest-item{padding:8px 12px;font-size:13px;cursor:pointer;transition:background 150ms}
+.tag-suggest-item:hover{background:var(--c-surface)}
+
+/* Inventory system cards */
+.inv-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+@media(max-width:460px){.inv-grid{grid-template-columns:1fr}}
+.inv-card{border:1px solid var(--c-border);border-radius:var(--r);padding:14px;cursor:pointer;transition:border-color 200ms var(--ease),background 200ms var(--ease);background:#fff;position:relative}
+.inv-card:hover{border-color:var(--c-border-2)}
+.inv-card.selected{border-color:var(--c-fg);background:var(--c-bg)}
+.inv-card.selected::after{content:'✓';position:absolute;top:10px;right:12px;font-size:12px;color:var(--c-fg)}
+.inv-card input[type=radio]{display:none}
+.inv-card-name{font-size:13px;font-weight:400;margin-bottom:3px}
+.inv-card-desc{font-size:11px;color:var(--c-fg-2);line-height:1.5}
+
+/* Shopify URL field (shown/hidden) */
+.shopify-field{overflow:hidden;max-height:0;opacity:0;transition:max-height 400ms var(--ease),opacity 300ms var(--ease),margin 300ms var(--ease);margin-bottom:0}
+.shopify-field.open{max-height:100px;opacity:1;margin-bottom:18px}
+
+/* Footer */
+.form-footer{margin-top:32px;padding-top:24px;border-top:1px solid var(--c-border);display:flex;align-items:center;justify-content:space-between}
+.form-note{font-size:11px;color:var(--c-fg-3)}
+.btn-primary{
+  background:var(--c-fg);color:#fff;border:none;border-radius:var(--r);
+  padding:11px 28px;font-family:var(--f-sans);font-size:13px;font-weight:400;
+  letter-spacing:.04em;cursor:pointer;transition:opacity 200ms var(--ease);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.btn-primary:hover{opacity:.8}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{
+  background:none;color:var(--c-fg-2);border:1px solid var(--c-border);border-radius:var(--r);
+  padding:10px 18px;font-family:var(--f-sans);font-size:13px;font-weight:300;cursor:pointer;
+  transition:border-color 200ms var(--ease);
+}
+.btn-ghost:hover{border-color:var(--c-border-2)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- LEFT SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="sidebar-logo">IGAN VNTG</div>
+      <h2 class="sidebar-headline">Your inventory,<br>found by buyers<br>everywhere.</h2>
+      <ul class="sidebar-points">
+        <li class="sidebar-point">
+          <span class="sidebar-point-num">01</span>
+          <span class="sidebar-point-text">Buyers searching for exactly what you carry — by designer, collection, year, city — find your boutique through search.</span>
+        </li>
+        <li class="sidebar-point">
+          <span class="sidebar-point-num">02</span>
+          <span class="sidebar-point-text">If you're on Shopify, your inventory syncs automatically. You change nothing about how you work.</span>
+        </li>
+        <li class="sidebar-point">
+          <span class="sidebar-point-num">03</span>
+          <span class="sidebar-point-text">Your profile is live in minutes. Google starts indexing your pages immediately.</span>
+        </li>
+      </ul>
+    </div>
+    <p class="sidebar-note">This takes 3 minutes. We do the rest.</p>
+  </div>
+
+  <!-- FORM PANEL -->
+  <div class="form-panel">
+    <div class="form-header">
+      <a href="sell.html" class="form-back">← Back</a>
+      <span class="form-step-label">Step 1 of 3</span>
+    </div>
+
+    <div class="progress-track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Onboarding progress: step 1 of 3">
+      <div class="progress-seg done"></div>
+      <div class="progress-seg"></div>
+      <div class="progress-seg"></div>
+    </div>
+
+    <h1 class="form-title">Your boutique</h1>
+    <p class="form-sub">Basic details. This builds your profile page and gets your inventory indexed.</p>
+
+    <form id="step1" novalidate>
+
+      <div class="field">
+        <label for="b-name">Boutique name <span class="req">*</span></label>
+        <input type="text" id="b-name" name="name" placeholder="e.g. Mine & Yours" autocomplete="organization"/>
+        <div class="field-error" id="err-name">Please enter the boutique name.</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field" style="margin-bottom:0">
+          <label for="b-city">City <span class="req">*</span></label>
+          <input type="text" id="b-city" name="city" placeholder="e.g. Vancouver"/>
+          <div class="field-error" id="err-city">Required.</div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label for="b-country">Country <span class="req">*</span></label>
+          <select id="b-country" name="country">
+            <option value="">Select</option>
+            <option value="CA" selected>Canada</option>
+            <option value="US">United States</option>
+            <option value="GB">United Kingdom</option>
+            <option value="FR">France</option>
+            <option value="DE">Germany</option>
+            <option value="NL">Netherlands</option>
+            <option value="JP">Japan</option>
+            <option value="AU">Australia</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="b-email">Contact email <span class="req">*</span></label>
+        <input type="text" id="b-email" name="email" placeholder="owner@boutique.com" autocomplete="email"/>
+        <p class="field-hint">Where we send your login and buyer notifications. Not public.</p>
+        <div class="field-error" id="err-email">Please enter a valid email.</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field" style="margin-bottom:0">
+          <label for="b-website">Website</label>
+          <input type="url" id="b-website" name="website" placeholder="https://"/>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label for="b-instagram">Instagram</label>
+          <input type="text" id="b-instagram" name="instagram" placeholder="@handle"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Designers you typically carry</label>
+        <div class="tag-wrap" id="tag-wrap" onclick="document.getElementById('tag-input').focus()">
+          <span class="tag" data-val="Chanel">Chanel <span class="tag-x" onclick="removeTag(this)">×</span></span>
+          <span class="tag" data-val="Hermès">Hermès <span class="tag-x" onclick="removeTag(this)">×</span></span>
+          <input type="text" id="tag-input" placeholder="Add designer + Enter" autocomplete="off"/>
+        </div>
+        <div id="tag-suggest" class="tag-suggest"></div>
+        <p class="field-hint">As many as you like. Used for search indexing and your profile.</p>
+      </div>
+
+      <div class="field">
+        <label>How do you manage inventory? <span class="req">*</span></label>
+        <div class="inv-grid">
+          <label class="inv-card selected" onclick="selectInv(this,'shopify')">
+            <input type="radio" name="inv" value="shopify" checked/>
+            <div class="inv-card-name">Shopify</div>
+            <div class="inv-card-desc">We sync your products automatically. Zero extra work.</div>
+          </label>
+          <label class="inv-card" onclick="selectInv(this,'woocommerce')">
+            <input type="radio" name="inv" value="woocommerce"/>
+            <div class="inv-card-name">WooCommerce</div>
+            <div class="inv-card-desc">CSV export. We import and keep updated.</div>
+          </label>
+          <label class="inv-card" onclick="selectInv(this,'other')">
+            <input type="radio" name="inv" value="other"/>
+            <div class="inv-card-name">Other platform</div>
+            <div class="inv-card-desc">Any system with CSV export works.</div>
+          </label>
+          <label class="inv-card" onclick="selectInv(this,'none')">
+            <input type="radio" name="inv" value="none"/>
+            <div class="inv-card-name">Instagram / none</div>
+            <div class="inv-card-desc">We'll help you get set up manually.</div>
+          </label>
+        </div>
+        <div class="field-error" id="err-inv">Please select an option.</div>
+      </div>
+
+      <!-- Shopify URL — appears only when Shopify selected -->
+      <div class="shopify-field open" id="shopify-url-field">
+        <label for="b-shopify">Your Shopify URL <span class="req">*</span></label>
+        <input type="text" id="b-shopify" name="shopify_url" placeholder="yourstore.myshopify.com"/>
+        <p class="field-hint">We only ever read your products. We never touch orders or customer data.</p>
+        <div class="field-error" id="err-shopify">Please enter your Shopify URL.</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field" style="margin-bottom:0">
+          <label for="b-currency">Currency</label>
+          <select id="b-currency" name="currency">
+            <option value="CAD" selected>CAD — Canadian Dollar</option>
+            <option value="USD">USD — US Dollar</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="JPY">JPY — Japanese Yen</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label for="b-ships">Ships to</label>
+          <select id="b-ships" name="ships_to">
+            <option>Canada only</option>
+            <option selected>Canada + United States</option>
+            <option>Canada, US + UK</option>
+            <option>Worldwide</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <span class="form-note">Fields marked * are required</span>
+        <button type="submit" class="btn-primary">
+          Continue
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+var DESIGNERS=['Acne Studios','Alexander McQueen','Balenciaga','Bottega Veneta','Burberry',
+  'Celine','Chanel','Comme des Garçons','Dior','Fendi','Givenchy','Gucci','Helmut Lang',
+  'Hermès','Issey Miyake','Jacquemus','Jil Sander','Loewe','Loro Piana','Louis Vuitton',
+  'Maison Margiela','Miu Miu','Phoebe Philo','Prada','Saint Laurent','The Row','Valentino',
+  'Versace','Vivienne Westwood','Yohji Yamamoto'];
+
+var invMode='shopify';
+var tags=[];
+
+/* Pre-load tags from DOM */
+document.querySelectorAll('#tag-wrap .tag').forEach(function(t){
+  tags.push(t.dataset.val);
+});
+
+/* Inventory card selection */
+function selectInv(card,mode){
+  document.querySelectorAll('.inv-card').forEach(function(c){c.classList.remove('selected')});
+  card.classList.add('selected');
+  invMode=mode;
+  var sf=document.getElementById('shopify-url-field');
+  if(mode==='shopify'){sf.classList.add('open')}else{sf.classList.remove('open')}
+}
+
+/* Designer tags */
+var tagInput=document.getElementById('tag-input');
+var tagSuggest=document.getElementById('tag-suggest');
+
+tagInput.addEventListener('input',function(){
+  var q=tagInput.value.trim().toLowerCase();
+  if(!q){tagSuggest.classList.remove('open');return}
+  var matches=DESIGNERS.filter(function(d){return d.toLowerCase().includes(q)&&!tags.includes(d)});
+  if(!matches.length){tagSuggest.classList.remove('open');return}
+  tagSuggest.innerHTML=matches.slice(0,6).map(function(d){
+    return '<div class="tag-suggest-item" onclick="addTag(\''+d.replace(/'/g,"\\'")+'\')">'+ d +'</div>'
+  }).join('');
+  var rect=document.getElementById('tag-wrap').getBoundingClientRect();
+  tagSuggest.style.top=(rect.bottom+window.scrollY+4)+'px';
+  tagSuggest.style.left=rect.left+'px';
+  tagSuggest.classList.add('open');
+});
+
+tagInput.addEventListener('keydown',function(e){
+  if((e.key==='Enter'||e.key===',')&&tagInput.value.trim()){
+    e.preventDefault();
+    addTag(tagInput.value.trim().replace(/,$/,''));
+  }
+  if(e.key==='Escape'){tagSuggest.classList.remove('open')}
+});
+
+document.addEventListener('click',function(e){
+  if(!e.target.closest('#tag-wrap')&&!e.target.closest('#tag-suggest')){
+    tagSuggest.classList.remove('open');
+  }
+});
+
+function addTag(name){
+  if(!name||tags.includes(name))return;
+  tags.push(name);
+  var span=document.createElement('span');
+  span.className='tag';
+  span.dataset.val=name;
+  span.innerHTML=name+' <span class="tag-x" onclick="removeTag(this)">×</span>';
+  var wrap=document.getElementById('tag-wrap');
+  wrap.insertBefore(span,tagInput);
+  tagInput.value='';
+  tagSuggest.classList.remove('open');
+}
+
+function removeTag(x){
+  var tag=x.closest('.tag');
+  var val=tag.dataset.val;
+  tags=tags.filter(function(t){return t!==val});
+  tag.remove();
+}
+
+/* Form validation + submit */
+document.getElementById('step1').addEventListener('submit',function(e){
+  e.preventDefault();
+  var ok=true;
+
+  function check(id,errId,test){
+    var el=document.getElementById(id);
+    var err=document.getElementById(errId);
+    if(!test(el.value)){
+      el.classList.add('error');
+      err.classList.add('show');
+      ok=false;
+    } else {
+      el.classList.remove('error');
+      err.classList.remove('show');
+    }
+  }
+
+  check('b-name','err-name',function(v){return v.trim().length>0});
+  check('b-city','err-city',function(v){return v.trim().length>0});
+  check('b-email','err-email',function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)});
+  if(invMode==='shopify'){
+    check('b-shopify','err-shopify',function(v){return v.trim().length>2});
+  }
+
+  if(!ok)return;
+
+  /* Save to localStorage */
+  var data={
+    name:document.getElementById('b-name').value.trim(),
+    city:document.getElementById('b-city').value.trim(),
+    country:document.getElementById('b-country').value,
+    email:document.getElementById('b-email').value.trim(),
+    website:document.getElementById('b-website').value.trim(),
+    instagram:document.getElementById('b-instagram').value.trim(),
+    designers:tags,
+    inv_system:invMode,
+    shopify_url:document.getElementById('b-shopify').value.trim(),
+    currency:document.getElementById('b-currency').value,
+    ships_to:document.getElementById('b-ships').value
+  };
+  localStorage.setItem('igan_onboard',JSON.stringify(data));
+  window.location.href='onboard-step2.html';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Connect Inventory — IGAN VNTG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --c-bg:#F7F5F1;--c-surface:#F0EDE7;--c-fg:#1A1917;--c-fg-2:#8A857D;--c-fg-3:#B8B3AB;
+  --c-border:#E0DAD1;--c-border-2:#C8C1B6;--c-green:#166534;--c-green-bg:#F0FDF4;
+  --c-green-border:#86EFAC;--c-red:#991B1B;--c-red-bg:#FEF2F2;--c-red-border:#FECACA;
+  --c-amber:#92400E;--c-amber-bg:#FFFBEB;--c-amber-border:#FDE68A;
+  --f-serif:'Cormorant Garamond',Georgia,serif;--f-sans:'Jost','Helvetica Neue',sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:4px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;-webkit-font-smoothing:antialiased}
+body{background:var(--c-bg);color:var(--c-fg);font-family:var(--f-sans);font-weight:300;line-height:1.6;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+.page{display:grid;grid-template-columns:1fr 420px;min-height:100vh}
+@media(max-width:900px){.page{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+
+.sidebar{background:var(--c-fg);color:var(--c-bg);padding:48px 40px;display:flex;flex-direction:column;justify-content:space-between;position:sticky;top:0;height:100vh;overflow:hidden}
+@media(max-width:900px){.sidebar{position:static;height:auto;padding:32px 24px}}
+.sidebar-logo{font-size:11px;font-weight:200;letter-spacing:.42em;word-spacing:.5em;text-transform:uppercase;opacity:.9}
+.sidebar-boutique{margin-top:48px}
+.sidebar-boutique-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.4;margin-bottom:10px}
+.sidebar-boutique-name{font-family:var(--f-serif);font-style:italic;font-weight:300;font-size:2rem;line-height:1.1;color:var(--c-bg);margin-bottom:6px}
+.sidebar-boutique-city{font-size:13px;opacity:.55}
+.sidebar-what{margin-top:48px}
+@media(max-width:900px){.sidebar-boutique{margin-top:20px}.sidebar-what{display:none}}
+.sidebar-what-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.4;margin-bottom:16px}
+.sidebar-what-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;opacity:.75}
+.sidebar-what-dot{width:4px;height:4px;border-radius:50%;background:var(--c-bg);margin-top:6px;flex-shrink:0}
+.sidebar-what-text{font-size:12px;font-weight:300;line-height:1.65}
+
+.form-panel{padding:48px 40px 80px;overflow-y:auto}
+@media(max-width:900px){.form-panel{padding:32px 20px 60px}}
+.form-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px}
+.form-back{font-size:11px;font-weight:300;letter-spacing:.08em;text-transform:uppercase;color:var(--c-fg-2);transition:color 200ms var(--ease)}
+.form-back:hover{color:var(--c-fg)}
+.form-step-label{font-size:11px;color:var(--c-fg-3);letter-spacing:.06em}
+
+.progress-track{display:flex;gap:4px;margin-bottom:36px}
+.progress-seg{height:2px;border-radius:1px;flex:1;background:var(--c-border);transition:background 400ms var(--ease)}
+.progress-seg.done{background:var(--c-fg)}
+
+.form-title{font-size:22px;font-weight:400;margin-bottom:6px;letter-spacing:-.01em}
+.form-sub{font-size:13px;color:var(--c-fg-2);margin-bottom:32px;line-height:1.65}
+
+/* Connection states */
+.connect-card{border:1px solid var(--c-border);border-radius:var(--r);background:#fff;overflow:hidden;margin-bottom:20px;transition:border-color 300ms var(--ease)}
+.connect-card-header{padding:18px 20px;display:flex;align-items:center;gap:14px}
+.connect-icon{width:40px;height:40px;border-radius:var(--r);background:var(--c-surface);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.connect-card-title{font-size:15px;font-weight:400;margin-bottom:2px}
+.connect-card-sub{font-size:12px;color:var(--c-fg-2)}
+.connect-card-body{padding:0 20px 20px}
+
+/* States */
+.state{display:none}
+.state.active{display:block}
+
+.url-row{display:flex;gap:8px;align-items:center}
+.url-prefix{font-size:13px;color:var(--c-fg-2);white-space:nowrap;padding:10px 0}
+input[type=text]{
+  width:100%;padding:10px 12px;border:1px solid var(--c-border);border-radius:var(--r);
+  background:#fff;color:var(--c-fg);font-size:14px;font-weight:300;
+  outline:none;transition:border-color 200ms var(--ease),box-shadow 200ms var(--ease);
+}
+input:focus{border-color:var(--c-fg);box-shadow:0 0 0 3px rgba(26,25,23,.06)}
+
+.btn-primary{
+  background:var(--c-fg);color:#fff;border:none;border-radius:var(--r);
+  padding:11px 24px;font-family:var(--f-sans);font-size:13px;font-weight:400;
+  letter-spacing:.04em;cursor:pointer;transition:opacity 200ms var(--ease);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.btn-primary:hover{opacity:.8}
+.btn-ghost{
+  background:none;color:var(--c-fg-2);border:1px solid var(--c-border);border-radius:var(--r);
+  padding:10px 18px;font-family:var(--f-sans);font-size:13px;font-weight:300;cursor:pointer;
+  transition:border-color 200ms;
+}
+.btn-ghost:hover{border-color:var(--c-border-2)}
+.btn-link{background:none;border:none;font-family:var(--f-sans);font-size:12px;color:var(--c-fg-2);cursor:pointer;text-decoration:underline}
+
+/* Connecting animation */
+.connecting-anim{display:flex;flex-direction:column;gap:12px;padding:4px 0}
+.anim-step{display:flex;align-items:center;gap:10px;font-size:13px;opacity:.4;transition:opacity 400ms var(--ease)}
+.anim-step.done{opacity:1}
+.anim-step.running{opacity:1}
+.anim-step-icon{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--c-border-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px}
+.anim-step.done .anim-step-icon{background:var(--c-green);border-color:var(--c-green);color:#fff}
+.anim-step.running .anim-step-icon{border-color:var(--c-fg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:10px;height:10px;border:1.5px solid var(--c-border-2);border-top-color:var(--c-fg);border-radius:50%;animation:spin .7s linear infinite}
+
+/* Status banners */
+.banner{border-radius:var(--r);padding:14px 16px;font-size:13px;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start}
+.banner-icon{font-size:15px;flex-shrink:0;margin-top:1px}
+.banner-green{background:var(--c-green-bg);border:1px solid var(--c-green-border);color:var(--c-green)}
+.banner-red{background:var(--c-red-bg);border:1px solid var(--c-red-border);color:var(--c-red)}
+.banner-amber{background:var(--c-amber-bg);border:1px solid var(--c-amber-border);color:var(--c-amber)}
+.banner-title{font-weight:400;margin-bottom:3px}
+.banner-body{font-size:12px;opacity:.85;line-height:1.6}
+
+/* Connected product summary */
+.product-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.ps-item{background:var(--c-surface);border-radius:var(--r);padding:12px;text-align:center}
+.ps-val{font-size:20px;font-weight:400;margin-bottom:2px}
+.ps-label{font-size:10px;color:var(--c-fg-2);letter-spacing:.06em;text-transform:uppercase}
+
+.form-footer{margin-top:32px;padding-top:24px;border-top:1px solid var(--c-border);display:flex;align-items:center;justify-content:space-between}
+.form-note{font-size:11px;color:var(--c-fg-3)}
+
+/* Error details expandable */
+.error-details{margin-top:10px;font-size:12px}
+.error-option{background:#fff;border:1px solid var(--c-red-border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px}
+.error-option-title{font-weight:400;color:var(--c-red);margin-bottom:4px;font-size:12px}
+.error-option-body{font-size:11px;color:var(--c-fg-2);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="sidebar-logo">IGAN VNTG</div>
+      <div class="sidebar-boutique">
+        <div class="sidebar-boutique-label">Setting up</div>
+        <div class="sidebar-boutique-name" id="sb-name">Your boutique</div>
+        <div class="sidebar-boutique-city" id="sb-city">—</div>
+      </div>
+      <div class="sidebar-what">
+        <div class="sidebar-what-label">What happens now</div>
+        <div class="sidebar-what-item"><div class="sidebar-what-dot"></div><div class="sidebar-what-text">We connect to your Shopify with read-only access — we never see orders or customer data.</div></div>
+        <div class="sidebar-what-item"><div class="sidebar-what-dot"></div><div class="sidebar-what-text">Your products sync immediately. Every item is indexed and searchable within minutes.</div></div>
+        <div class="sidebar-what-item"><div class="sidebar-what-dot"></div><div class="sidebar-what-text">When something sells on your Shopify it disappears from IGAN VNTG automatically.</div></div>
+        <div class="sidebar-what-item"><div class="sidebar-what-dot"></div><div class="sidebar-what-text">You run your store exactly as you do today. Nothing changes on your end.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM PANEL -->
+  <div class="form-panel">
+    <div class="form-header">
+      <a href="onboard-step1.html" class="form-back">← Back</a>
+      <span class="form-step-label">Step 2 of 3</span>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-seg done"></div>
+      <div class="progress-seg done"></div>
+      <div class="progress-seg"></div>
+    </div>
+
+    <h1 class="form-title">Connect your inventory</h1>
+    <p class="form-sub" id="step2-sub">We'll pull your products automatically. This is the only technical step.</p>
+
+    <!-- Shopify card -->
+    <div class="connect-card" id="shopify-card">
+      <div class="connect-card-header">
+        <div class="connect-icon">🛍</div>
+        <div>
+          <div class="connect-card-title">Shopify</div>
+          <div class="connect-card-sub" id="shopify-card-sub">Connects in about 30 seconds</div>
+        </div>
+      </div>
+      <div class="connect-card-body">
+
+        <!-- STATE: idle -->
+        <div class="state active" id="s-idle">
+          <div class="url-row" style="margin-bottom:10px">
+            <span class="url-prefix">https://</span>
+            <input type="text" id="shopify-url" placeholder="yourstore.myshopify.com" autocomplete="off"/>
+          </div>
+          <p style="font-size:11px;color:var(--c-fg-3);margin-bottom:14px">We request read-only access. We never touch orders, customers, or fulfilment.</p>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <button class="btn-primary" onclick="startConnect()">Connect Shopify →</button>
+            <button class="btn-link" onclick="skipToManual()">Skip — I'll add products manually</button>
+          </div>
+        </div>
+
+        <!-- STATE: connecting -->
+        <div class="state" id="s-connecting">
+          <div class="connecting-anim" id="anim">
+            <div class="anim-step" id="a1"><div class="anim-step-icon"></div><span>Verifying store URL</span></div>
+            <div class="anim-step" id="a2"><div class="anim-step-icon"></div><span>Requesting read-only access</span></div>
+            <div class="anim-step" id="a3"><div class="anim-step-icon"></div><span>Reading product catalog</span></div>
+            <div class="anim-step" id="a4"><div class="anim-step-icon"></div><span>Normalizing designer names</span></div>
+            <div class="anim-step" id="a5"><div class="anim-step-icon"></div><span>Indexing products</span></div>
+          </div>
+        </div>
+
+        <!-- STATE: connected -->
+        <div class="state" id="s-connected">
+          <div class="banner banner-green">
+            <div class="banner-icon">✓</div>
+            <div>
+              <div class="banner-title">Connected successfully</div>
+              <div class="banner-body">Your products are indexed and searchable. Syncs every 15 minutes. Sold items disappear automatically.</div>
+            </div>
+          </div>
+          <div class="product-summary">
+            <div class="ps-item"><div class="ps-val" id="ps-total">—</div><div class="ps-label">Products live</div></div>
+            <div class="ps-item"><div class="ps-val" id="ps-designers">—</div><div class="ps-label">Designers</div></div>
+            <div class="ps-item"><div class="ps-val" id="ps-review">—</div><div class="ps-label">In review</div></div>
+          </div>
+          <p style="font-size:12px;color:var(--c-fg-2)">Products in review are missing a required field (condition, images, or name). We'll notify you with what to add.</p>
+        </div>
+
+        <!-- STATE: error-url -->
+        <div class="state" id="s-error-url">
+          <div class="banner banner-red">
+            <div class="banner-icon">✕</div>
+            <div>
+              <div class="banner-title">Store URL not found</div>
+              <div class="banner-body">We couldn't find a Shopify store at that address. Check for typos and try again.</div>
+            </div>
+          </div>
+          <div class="url-row" style="margin-bottom:10px">
+            <span class="url-prefix">https://</span>
+            <input type="text" id="shopify-url-retry" placeholder="yourstore.myshopify.com" autocomplete="off"/>
+          </div>
+          <button class="btn-primary" onclick="retryConnect()">Try again →</button>
+        </div>
+
+        <!-- STATE: error-permission -->
+        <div class="state" id="s-error-permission">
+          <div class="banner banner-amber">
+            <div class="banner-icon">⚠</div>
+            <div>
+              <div class="banner-title">Access not granted</div>
+              <div class="banner-body">Looks like the connection was declined. This is easy to fix — take one of these steps:</div>
+            </div>
+          </div>
+          <div class="error-details">
+            <div class="error-option">
+              <div class="error-option-title">Most common: click the wrong button</div>
+              <div class="error-option-body">In the Shopify screen that opened, click "Install" not "Decline." We'll send you the link again.</div>
+            </div>
+            <div class="error-option">
+              <div class="error-option-title">Store is password protected</div>
+              <div class="error-option-body">Go to Shopify Admin → Online Store → Preferences → uncheck "Restrict access." Then reconnect.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+            <button class="btn-primary" onclick="goIdle()">Try again →</button>
+            <button class="btn-ghost" onclick="skipToManual()">Skip for now</button>
+          </div>
+        </div>
+
+        <!-- STATE: manual -->
+        <div class="state" id="s-manual">
+          <div class="banner banner-amber">
+            <div class="banner-icon">i</div>
+            <div>
+              <div class="banner-title">Manual setup selected</div>
+              <div class="banner-body">We'll reach out within 24 hours to help you add your first products. Your profile goes live now — inventory follows.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-footer" id="step2-footer">
+      <span class="form-note" id="footer-note">Step 2 of 3</span>
+      <button class="btn-primary" id="footer-btn" onclick="goStep3()" disabled>
+        Continue →
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+/* Load saved data */
+var data={};
+try{data=JSON.parse(localStorage.getItem('igan_onboard')||'{}')}catch(e){}
+if(data.name){document.getElementById('sb-name').textContent=data.name}
+if(data.city&&data.country){document.getElementById('sb-city').textContent=data.city+', '+data.country}
+if(data.shopify_url){document.getElementById('shopify-url').value=data.shopify_url}
+if(data.inv_system&&data.inv_system!=='shopify'){
+  document.getElementById('step2-sub').textContent='Add your inventory — we\'ll walk you through it.';
+  goManual();
+}
+
+function showState(id){
+  document.querySelectorAll('.state').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+}
+
+function goIdle(){showState('s-idle')}
+function skipToManual(){showState('s-manual');enableContinue()}
+function goManual(){showState('s-manual');enableContinue()}
+
+function enableContinue(){
+  document.getElementById('footer-btn').disabled=false;
+}
+
+/* Animation steps */
+var STEPS_SHOPIFY=[
+  {label:'Verifying store URL',ms:600},
+  {label:'Requesting read-only access',ms:1100},
+  {label:'Reading product catalog',ms:1800},
+  {label:'Normalising designer names',ms:900},
+  {label:'Indexing products',ms:700}
+];
+
+function animStep(i,steps,cb){
+  if(i>=steps.length){cb();return}
+  var el=document.getElementById('a'+(i+1));
+  el.classList.add('running');
+  el.querySelector('.anim-step-icon').innerHTML='<div class="spinner"></div>';
+  setTimeout(function(){
+    el.classList.remove('running');
+    el.classList.add('done');
+    el.querySelector('.anim-step-icon').innerHTML='✓';
+    setTimeout(function(){animStep(i+1,steps,cb)},120);
+  },steps[i].ms);
+}
+
+function startConnect(){
+  var url=document.getElementById('shopify-url').value.trim();
+  if(!url){
+    document.getElementById('shopify-url').style.borderColor='#dc2626';
+    return;
+  }
+  /* Save URL */
+  data.shopify_url=url;
+  localStorage.setItem('igan_onboard',JSON.stringify(data));
+
+  /* Simulate: 80% success, 10% URL error, 10% permission error */
+  var r=Math.random();
+  var scenario = url.toLowerCase().includes('error') ? 'url' :
+                 url.toLowerCase().includes('deny')  ? 'perm' :
+                 r < 0.85 ? 'success' : r < 0.93 ? 'url' : 'perm';
+
+  showState('s-connecting');
+  document.getElementById('shopify-card-sub').textContent='Connecting…';
+
+  /* Reset anim steps */
+  for(var i=1;i<=5;i++){
+    var el=document.getElementById('a'+i);
+    el.className='anim-step';
+    el.querySelector('.anim-step-icon').innerHTML='';
+  }
+
+  var steps=STEPS_SHOPIFY.slice();
+  if(scenario!=='success'){steps=steps.slice(0,scenario==='url'?1:2)}
+
+  animStep(0,steps,function(){
+    setTimeout(function(){
+      if(scenario==='url'){showState('s-error-url')}
+      else if(scenario==='perm'){showState('s-error-permission')}
+      else{
+        /* Success */
+        var total=Math.floor(Math.random()*180)+40;
+        var designers=Math.floor(Math.random()*8)+3;
+        var review=Math.floor(total*0.04);
+        document.getElementById('ps-total').textContent=total-review;
+        document.getElementById('ps-designers').textContent=designers;
+        document.getElementById('ps-review').textContent=review;
+        document.getElementById('shopify-card-sub').textContent='Synced · '+total+' products';
+        document.getElementById('shopify-card').style.borderColor='#86EFAC';
+        showState('s-connected');
+        data.connected=true;data.product_count=total;
+        localStorage.setItem('igan_onboard',JSON.stringify(data));
+        enableContinue();
+        document.getElementById('footer-note').textContent='Products are live. One step left.';
+      }
+    },200);
+  });
+}
+
+function retryConnect(){
+  var url=document.getElementById('shopify-url-retry').value.trim();
+  if(url){document.getElementById('shopify-url').value=url}
+  goIdle();
+  setTimeout(startConnect,100);
+}
+
+function goStep3(){
+  window.location.href='onboard-step3.html';
+}
+</script>
+</body>
+</html>

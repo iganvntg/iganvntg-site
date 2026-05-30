@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard — IGAN VNTG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --c-bg:#F7F5F1;--c-surface:#F0EDE7;--c-fg:#1A1917;--c-fg-2:#8A857D;--c-fg-3:#B8B3AB;
+  --c-border:#E0DAD1;--c-border-2:#C8C1B6;--c-green:#166534;--c-green-bg:#F0FDF4;
+  --c-green-border:#86EFAC;
+  --f-serif:'Cormorant Garamond',Georgia,serif;--f-sans:'Jost','Helvetica Neue',sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);--r:4px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;-webkit-font-smoothing:antialiased}
+body{background:var(--c-bg);color:var(--c-fg);font-family:var(--f-sans);font-weight:300;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+/* Layout */
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+@media(max-width:768px){.shell{grid-template-columns:1fr;grid-template-rows:auto 1fr}}
+
+/* Sidebar nav */
+.sidenav{background:var(--c-fg);color:var(--c-bg);padding:0;display:flex;flex-direction:column}
+@media(max-width:768px){.sidenav{flex-direction:row;padding:0}}
+.sidenav-logo{padding:24px 20px 0;font-size:11px;font-weight:200;letter-spacing:.42em;word-spacing:.5em;text-transform:uppercase;opacity:.8}
+@media(max-width:768px){.sidenav-logo{display:none}}
+.sidenav-boutique{padding:16px 20px 0;margin-bottom:4px}
+@media(max-width:768px){.sidenav-boutique{display:none}}
+.sidenav-boutique-name{font-family:var(--f-serif);font-style:italic;font-weight:300;font-size:1.1rem;color:var(--c-bg);line-height:1.2;margin-bottom:2px}
+.sidenav-boutique-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;background:var(--c-green-bg);color:var(--c-green);padding:2px 8px;border-radius:2px;font-weight:400}
+.sidenav-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--c-green)}
+.nav-links{padding:20px 0;flex:1;display:flex;flex-direction:column}
+@media(max-width:768px){.nav-links{flex-direction:row;padding:0;overflow-x:auto}}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:12px;font-weight:300;letter-spacing:.04em;color:rgba(247,245,241,.6);cursor:pointer;transition:all 180ms;border-left:2px solid transparent}
+@media(max-width:768px){.nav-link{padding:14px 16px;border-left:none;border-bottom:2px solid transparent;white-space:nowrap}}
+.nav-link:hover{color:rgba(247,245,241,.9);background:rgba(247,245,241,.05);border-left-color:rgba(247,245,241,.2)}
+@media(max-width:768px){.nav-link:hover{border-bottom-color:rgba(247,245,241,.2);border-left-color:transparent}}
+.nav-link.active{color:var(--c-bg);border-left-color:var(--c-bg);background:rgba(247,245,241,.07)}
+@media(max-width:768px){.nav-link.active{border-bottom-color:var(--c-bg);border-left-color:transparent}}
+.nav-link-icon{font-size:14px;opacity:.7}
+.sidenav-footer{padding:16px 20px;border-top:1px solid rgba(247,245,241,.08);font-size:11px;color:rgba(247,245,241,.3)}
+@media(max-width:768px){.sidenav-footer{display:none}}
+
+/* Main */
+.main{padding:36px 40px;overflow-y:auto}
+@media(max-width:768px){.main{padding:20px 16px}}
+
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.page-title{font-size:22px;font-weight:400;letter-spacing:-.01em;margin-bottom:2px}
+.page-sub{font-size:12px;color:var(--c-fg-2)}
+.btn-sm{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:7px 14px;border:1px solid var(--c-border);border-radius:var(--r);background:#fff;color:var(--c-fg);cursor:pointer;font-family:var(--f-sans);transition:border-color 200ms}
+.btn-sm:hover{border-color:var(--c-border-2)}
+.btn-sm-primary{background:var(--c-fg);color:#fff;border-color:var(--c-fg)}
+.btn-sm-primary:hover{opacity:.8}
+
+/* Stats */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:#fff;border:1px solid var(--c-border);border-radius:var(--r);padding:16px}
+.stat-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:8px}
+.stat-val{font-size:24px;font-weight:400;line-height:1;margin-bottom:4px}
+.stat-sub{font-size:11px;color:var(--c-fg-3)}
+
+/* Cards */
+.card{background:#fff;border:1px solid var(--c-border);border-radius:var(--r);margin-bottom:14px;overflow:hidden}
+.card-header{padding:14px 18px;border-bottom:1px solid var(--c-border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:13px;font-weight:400;letter-spacing:.02em}
+.card-body{padding:0}
+
+.sync-bar{background:var(--c-green-bg);border-bottom:1px solid var(--c-green-border);padding:10px 18px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--c-green);flex-wrap:wrap;gap:8px}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--c-green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10px;font-weight:400;color:var(--c-fg-2);padding:10px 18px;border-bottom:1px solid var(--c-border);letter-spacing:.08em;text-transform:uppercase}
+td{padding:12px 18px;border-bottom:1px solid var(--c-border)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--c-bg)}
+
+.badge{display:inline-flex;align-items:center;font-size:10px;padding:2px 8px;border-radius:2px;font-weight:400;letter-spacing:.04em}
+.badge-green{background:var(--c-green-bg);color:var(--c-green)}
+.badge-amber{background:#FFFBEB;color:#92400E}
+.badge-gray{background:var(--c-surface);color:var(--c-fg-2)}
+
+.empty{padding:40px;text-align:center;color:var(--c-fg-2);font-size:13px}
+
+/* SEO section */
+.seo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 18px}
+@media(max-width:560px){.seo-grid{grid-template-columns:1fr}}
+.seo-item{background:var(--c-bg);border-radius:var(--r);padding:12px 14px}
+.seo-item-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:6px}
+.seo-item-val{font-size:20px;font-weight:400;margin-bottom:2px}
+.seo-item-sub{font-size:11px;color:var(--c-fg-3)}
+.bar{height:3px;background:var(--c-border);border-radius:2px;margin-top:8px;overflow:hidden}
+.bar-fill{height:3px;background:var(--c-fg);border-radius:2px;transition:width .8s var(--ease)}
+
+.tabs{display:flex;border-bottom:1px solid var(--c-border);padding:0 18px}
+.tab{font-size:12px;font-weight:300;padding:10px 0;margin-right:24px;border-bottom:2px solid transparent;cursor:pointer;color:var(--c-fg-2);transition:all 180ms;letter-spacing:.04em}
+.tab.active{color:var(--c-fg);border-bottom-color:var(--c-fg)}
+.tab-panel{display:none;padding:16px 18px}
+.tab-panel.active{display:block}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- SIDENAV -->
+  <nav class="sidenav">
+    <div class="sidenav-logo">IGAN VNTG</div>
+    <div class="sidenav-boutique">
+      <div class="sidenav-boutique-name" id="sn-name">My boutique</div>
+      <div style="margin-top:6px"><span class="sidenav-boutique-badge"><span class="sidenav-badge-dot"></span>Live</span></div>
+    </div>
+    <div class="nav-links">
+      <div class="nav-link active" onclick="setTab(this,'overview')"><span class="nav-link-icon">◈</span> Overview</div>
+      <div class="nav-link" onclick="setTab(this,'inventory')"><span class="nav-link-icon">⊞</span> Inventory</div>
+      <div class="nav-link" onclick="setTab(this,'seo')"><span class="nav-link-icon">↗</span> SEO & visibility</div>
+      <div class="nav-link" onclick="setTab(this,'profile')"><span class="nav-link-icon">◉</span> My profile</div>
+    </div>
+    <div class="sidenav-footer">hello@iganvntg.com</div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- OVERVIEW TAB -->
+    <div id="tab-overview">
+      <div class="page-header">
+        <div>
+          <div class="page-title" id="dash-title">Overview</div>
+          <div class="page-sub" id="dash-sub">Everything is running.</div>
+        </div>
+        <button class="btn-sm btn-sm-primary" onclick="window.location.href='onboard-step1.html'">+ Another boutique</button>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card"><div class="stat-label">Products live</div><div class="stat-val" id="st-products">—</div><div class="stat-sub">Searchable now</div></div>
+        <div class="stat-card"><div class="stat-label">Profile views</div><div class="stat-val">0</div><div class="stat-sub">Growing as Google indexes</div></div>
+        <div class="stat-card"><div class="stat-label">Buyer inquiries</div><div class="stat-val">0</div><div class="stat-sub">Sent to your email</div></div>
+        <div class="stat-card"><div class="stat-label">Next sync</div><div class="stat-val" style="font-size:16px" id="st-sync">14 min</div><div class="stat-sub">Automatic</div></div>
+      </div>
+
+      <!-- Sync status -->
+      <div class="card">
+        <div class="sync-bar">
+          <div style="display:flex;align-items:center;gap:8px"><div class="sync-dot"></div><span>Shopify sync active</span></div>
+          <span id="sync-url-display" style="opacity:.7">—</span>
+        </div>
+        <div class="card-header">
+          <div class="card-title">Recent activity</div>
+          <button class="btn-sm" onclick="setTab(document.querySelector('.nav-link:nth-child(2)'),'inventory')">View all inventory</button>
+        </div>
+        <div class="card-body">
+          <table>
+            <thead><tr><th>Item</th><th>Event</th><th>When</th></tr></thead>
+            <tbody id="activity-table">
+              <tr><td colspan="3" class="empty">Activity will appear here as your inventory syncs and buyers engage.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- What happens next -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">What happens next</div></div>
+        <table>
+          <tbody>
+            <tr><td style="width:24px;color:var(--c-fg-2);font-size:12px">1</td><td><strong style="font-weight:400">Google indexes your pages.</strong><br><span style="font-size:12px;color:var(--c-fg-2)">Your boutique profile and every product page is submitted to Google now. Indexing typically takes 24–72 hours.</span></td></tr>
+            <tr><td style="color:var(--c-fg-2);font-size:12px">2</td><td><strong style="font-weight:400">Buyers find you through search.</strong><br><span style="font-size:12px;color:var(--c-fg-2)">Searches for the designers you carry, in your city, at your price range start routing to your boutique.</span></td></tr>
+            <tr><td style="color:var(--c-fg-2);font-size:12px">3</td><td><strong style="font-weight:400">Buyer inquiries go to your email.</strong><br><span style="font-size:12px;color:var(--c-fg-2)">When a buyer asks about a specific piece, you get an email directly. Reply as you normally would.</span></td></tr>
+            <tr><td style="color:var(--c-fg-2);font-size:12px">4</td><td><strong style="font-weight:400">Sold items disappear automatically.</strong><br><span style="font-size:12px;color:var(--c-fg-2)">When inventory hits zero on your Shopify, it's removed from IGAN VNTG within 15 minutes. You do nothing.</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- INVENTORY TAB -->
+    <div id="tab-inventory" style="display:none">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Inventory</div>
+          <div class="page-sub" id="inv-sub">Syncing from Shopify.</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-sm">Sync now</button>
+          <button class="btn-sm btn-sm-primary">+ Add item</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sync-bar">
+          <div style="display:flex;align-items:center;gap:8px"><div class="sync-dot"></div>Live — synced 2 min ago</div>
+        </div>
+        <div class="card-body">
+          <div class="tabs">
+            <div class="tab active" onclick="switchInvTab(this,'all')">All <span id="inv-count-badge"></span></div>
+            <div class="tab" onclick="switchInvTab(this,'available')">Available</div>
+            <div class="tab" onclick="switchInvTab(this,'review')">Needs review</div>
+          </div>
+          <div class="tab-panel active" id="inv-all">
+            <table>
+              <thead><tr><th>Item</th><th>Price</th><th>Condition</th><th>Status</th></tr></thead>
+              <tbody id="inv-table-body"></tbody>
+            </table>
+          </div>
+          <div class="tab-panel" id="inv-available">
+            <div class="empty">Available items will appear here.</div>
+          </div>
+          <div class="tab-panel" id="inv-review">
+            <div class="empty" id="review-empty">No items need review. All products are complete.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO TAB -->
+    <div id="tab-seo" style="display:none">
+      <div class="page-header">
+        <div>
+          <div class="page-title">SEO & visibility</div>
+          <div class="page-sub">How findable your boutique is on Google.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">Search visibility</div></div>
+        <div class="seo-grid">
+          <div class="seo-item"><div class="seo-item-label">Google pages submitted</div><div class="seo-item-val" id="seo-pages">—</div><div class="seo-item-sub">Profile + every product</div><div class="bar"><div class="bar-fill" style="width:100%"></div></div></div>
+          <div class="seo-item"><div class="seo-item-label">Products indexed</div><div class="seo-item-val" id="seo-indexed">Pending</div><div class="seo-item-sub">24–72h after going live</div><div class="bar"><div class="bar-fill" style="width:8%"></div></div></div>
+          <div class="seo-item"><div class="seo-item-label">Designer pages</div><div class="seo-item-val" id="seo-designers">—</div><div class="seo-item-sub">Your inventory on designer pages</div><div class="bar"><div class="bar-fill" id="seo-d-bar" style="width:0%"></div></div></div>
+          <div class="seo-item"><div class="seo-item-label">Collection coverage</div><div class="seo-item-val" id="seo-collections">—%</div><div class="seo-item-sub">Products with season/year tags</div><div class="bar"><div class="bar-fill" id="seo-c-bar" style="width:0%"></div></div></div>
+        </div>
+        <div style="padding:0 18px 16px;font-size:12px;color:var(--c-fg-2);line-height:1.65">
+          <strong style="font-weight:400">Your profile URL:</strong> <span id="seo-url" style="color:var(--c-fg)">—</span>
+          <br>Google will index this page and all your product pages within 24–72 hours of going live. Collection coverage grows as we tag your products — this happens automatically in the background.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">Searches your boutique now appears in</div></div>
+        <table>
+          <thead><tr><th>Search query</th><th>Your advantage</th></tr></thead>
+          <tbody id="seo-searches-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PROFILE TAB -->
+    <div id="tab-profile" style="display:none">
+      <div class="page-header">
+        <div><div class="page-title">My profile</div><div class="page-sub">What buyers see when they find your boutique.</div></div>
+        <button class="btn-sm btn-sm-primary">Save changes</button>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Profile details</div></div>
+        <div style="padding:18px;display:flex;flex-direction:column;gap:14px">
+          <div><label style="display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:6px">Boutique name</label><div style="font-size:15px;font-weight:400" id="pf-name">—</div></div>
+          <div><label style="display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:6px">Description</label>
+            <textarea id="pf-desc" style="width:100%;padding:10px 12px;border:1px solid var(--c-border);border-radius:var(--r);background:#fff;color:var(--c-fg);font-size:13px;font-weight:300;font-family:var(--f-sans);line-height:1.6;resize:vertical;outline:none;min-height:72px" placeholder="Tell buyers what makes your boutique special..."></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div><label style="display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:6px">Website</label><div style="font-size:13px" id="pf-web">—</div></div>
+            <div><label style="display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:6px">Instagram</label><div style="font-size:13px" id="pf-ig">—</div></div>
+          </div>
+          <div><label style="display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-fg-2);margin-bottom:6px">Designers</label><div id="pf-tags"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+'use strict';
+var data={};
+try{data=JSON.parse(localStorage.getItem('igan_onboard')||'{}')}catch(e){}
+
+var SAMPLE_INVENTORY=[
+  {name:'Chanel Classic Flap, Black',cat:'Bags',year:'2004',price:'$4,800',condition:'Excellent',status:'available'},
+  {name:'Hermès Kelly 28, Rouge',cat:'Bags',year:'2018',price:'$14,200',condition:'Excellent',status:'available'},
+  {name:'Prada Re-Edition 2005',cat:'Bags',year:'2005',price:'$1,200',condition:'Very good',status:'available'},
+  {name:'Bottega Veneta Pouch',cat:'Bags',year:'2021',price:'$2,400',condition:'Excellent',status:'available'},
+  {name:'Celine Luggage Tote',cat:'Bags',year:'2013',price:'$890',condition:'Very good',status:'available'},
+  {name:'Gucci Jackie 1961',cat:'Bags',year:'2020',price:'$1,650',condition:'Excellent',status:'available'},
+];
+
+/* Set names */
+document.getElementById('sn-name').textContent=data.name||'My boutique';
+document.getElementById('dash-title').textContent='Overview';
+
+/* Products stat */
+var pcount=data.product_count||SAMPLE_INVENTORY.length;
+document.getElementById('st-products').textContent=pcount;
+document.getElementById('inv-sub').textContent=pcount+' products synced from Shopify.';
+document.getElementById('inv-count-badge').textContent='('+pcount+')';
+
+/* Sync URL */
+if(data.shopify_url){
+  document.getElementById('sync-url-display').textContent=data.shopify_url;
+}
+
+/* Profile tab */
+document.getElementById('pf-name').textContent=data.name||'—';
+document.getElementById('pf-web').textContent=data.website||'Not set';
+document.getElementById('pf-ig').textContent=data.instagram||'Not set';
+if(data.description){document.getElementById('pf-desc').value=data.description}
+if(data.designers&&data.designers.length){
+  document.getElementById('pf-tags').innerHTML=data.designers.map(function(d){
+    return'<span style="display:inline-flex;background:var(--c-fg);color:#fff;border-radius:2px;padding:3px 8px;font-size:11px;margin:2px">'+d+'</span>'
+  }).join('');
+}
+
+/* SEO tab */
+var slug=(data.name||'boutique').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+var city=(data.city||'city').toLowerCase().replace(/\s+/g,'-');
+var country=(data.country||'ca').toLowerCase();
+document.getElementById('seo-pages').textContent=pcount+1;
+document.getElementById('seo-url').textContent='iganvntg.com/boutiques/'+country+'/'+city+'/'+slug;
+var dcount=data.designers?data.designers.length:0;
+document.getElementById('seo-designers').textContent=dcount;
+document.getElementById('seo-d-bar').style.width=Math.min(dcount*10,100)+'%';
+document.getElementById('seo-collections').textContent='0%';
+
+/* SEO search queries */
+var queries=[];
+if(data.designers&&data.designers.length){
+  queries.push(['vintage '+data.designers[0]+' for sale','You appear on the '+data.designers[0]+' designer page']);
+  if(data.city){queries.push(['vintage bags '+data.city,'You appear on the '+data.city+' city page'])}
+  if(data.designers[1]){queries.push([data.designers[1]+' bag under $3,000','You appear when price + designer + category match'])}
+}
+queries.push([data.name||'boutique name'+(data.city?' '+data.city:''),'Direct boutique search — your profile page']);
+document.getElementById('seo-searches-body').innerHTML=queries.map(function(q){
+  return'<tr><td style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:14px">'+q[0]+'</td><td style="font-size:12px;color:var(--c-fg-2)">'+q[1]+'</td></tr>'
+}).join('');
+
+/* Inventory table — use actual data or samples */
+var invItems=SAMPLE_INVENTORY.slice(0,Math.min(pcount,6));
+document.getElementById('inv-table-body').innerHTML=invItems.map(function(item){
+  return'<tr><td><div style="font-weight:400;font-size:13px">'+item.name+'</div><div style="font-size:11px;color:var(--c-fg-2)">'+item.cat+' · '+item.year+'</div></td><td style="font-weight:400">'+item.price+' '+(data.currency||'CAD')+'</td><td><span class="badge badge-green">'+item.condition+'</span></td><td><span class="badge badge-green">Live</span></td></tr>'
+}).join('');
+if(pcount>6){
+  document.getElementById('inv-table-body').innerHTML+='<tr><td colspan="4" style="text-align:center;padding:12px;font-size:12px;color:var(--c-fg-2)">+ '+(pcount-6)+' more products</td></tr>';
+}
+
+/* Sync countdown */
+var mins=14;
+setInterval(function(){
+  mins=mins<=0?15:mins-1;
+  document.getElementById('st-sync').textContent=mins+' min';
+},60000);
+
+/* Tab nav */
+function setTab(link,name){
+  document.querySelectorAll('.nav-link').forEach(function(l){l.classList.remove('active')});
+  link.classList.add('active');
+  document.querySelectorAll('[id^="tab-"]').forEach(function(t){t.style.display='none'});
+  document.getElementById('tab-'+name).style.display='block';
+}
+
+function switchInvTab(tab,name){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active')});
+  tab.classList.add('active');
+  document.getElementById('inv-'+name).classList.add('active');
+}
+</script>
+</body>
+</html>

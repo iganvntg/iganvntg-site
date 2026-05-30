@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="List your boutique on IGAN VNTG. Reach buyers searching for designer vintage in Canada — by designer, collection, year, city, and condition." />
+  <title>Sell With Us — IGAN VNTG</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── DESIGN TOKENS ─── */
+    :root {
+      --c-bg:       #F7F5F1;
+      --c-surface:  #F0EDE7;
+      --c-fg:       #1A1917;
+      --c-fg-2:     #8A857D;
+      --c-fg-3:     #B8B3AB;
+      --c-border:   #E0DAD1;
+      --c-border-2: #C8C1B6;
+
+      --f-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --f-sans:  'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+      --sp-1:  8px;  --sp-2:  16px; --sp-3:  24px; --sp-4:  32px;
+      --sp-6:  48px; --sp-8:  64px; --sp-12: 96px; --sp-16: 128px;
+
+      --gutter: 48px;
+      --max-w:  1440px;
+      --ease:   cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body { background: var(--c-bg); color: var(--c-fg); font-family: var(--f-sans); font-weight: 300; line-height: 1.65; overflow-x: hidden; }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; cursor: pointer; }
+    button { background: none; border: none; cursor: pointer; font: inherit; color: inherit; padding: 0; }
+    ul, ol { list-style: none; }
+
+    /* ─── ACCESSIBILITY ─── */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    :focus-visible { outline: 1px solid var(--c-fg); outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity 800ms var(--ease), transform 800ms var(--ease); }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    /* ─── TYPOGRAPHY PRIMITIVES ─── */
+    .t-eyebrow {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-fg-2);
+    }
+    .t-serif-display {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.12;
+      letter-spacing: -0.01em;
+    }
+    .t-link-underline {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 2px;
+      transition: opacity 220ms var(--ease);
+      display: inline-block;
+    }
+    .t-link-underline:hover { opacity: 0.45; }
+
+    /* ─── HEADER ─── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--c-bg);
+      border-bottom: 1px solid var(--c-border);
+      transition: border-color 300ms var(--ease);
+    }
+    .site-header.scrolled { border-bottom-color: var(--c-border-2); }
+
+    .nav-shell {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+      height: 60px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+
+    .nav-back {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--c-fg-2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 200ms var(--ease);
+    }
+    .nav-back:hover { color: var(--c-fg); }
+    .nav-back-arrow { font-size: 13px; }
+
+    .wordmark {
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      word-spacing: 0.55em;
+      color: var(--c-fg);
+      text-align: center;
+      display: block;
+    }
+    .wordmark:hover { opacity: 0.55; transition: opacity 240ms var(--ease); }
+
+    .nav-cta {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .nav-cta a {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      border-bottom: 1px solid var(--c-fg);
+      padding-bottom: 2px;
+      transition: opacity 220ms var(--ease);
+    }
+    .nav-cta a:hover { opacity: 0.5; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 6px 2px;
+    }
+    .nav-hamburger span { display: block; width: 20px; height: 1px; background: var(--c-fg); }
+
+    /* ─── PAGE HERO ─── */
+    .sell-hero {
+      padding: var(--sp-16) var(--gutter);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .sell-hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-16);
+      align-items: end;
+    }
+
+    .sell-hero-heading {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(2.75rem, 5vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-top: var(--sp-4);
+    }
+
+    .sell-hero-right {
+      padding-bottom: 8px;
+    }
+
+    .sell-hero-body {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--c-fg);
+      line-height: 1.85;
+      margin-bottom: var(--sp-8);
+      max-width: 480px;
+    }
+
+    /* Arrow CTA */
+    .arrow-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      transition: gap 260ms var(--ease);
+    }
+    .arrow-cta:hover { gap: 22px; }
+    .arrow-cta-line {
+      width: 22px;
+      height: 1px;
+      background: var(--c-fg);
+      flex-shrink: 0;
+      transition: width 260ms var(--ease);
+    }
+    .arrow-cta:hover .arrow-cta-line { width: 32px; }
+
+    /* ─── SECTION SHARED ─── */
+    .s-section {
+      padding: var(--sp-16) var(--gutter);
+      border-top: 1px solid var(--c-border);
+    }
+    .s-inner { max-width: var(--max-w); margin: 0 auto; }
+
+    /* ─── SEARCH EXAMPLES ─── */
+    .searches-header {
+      max-width: 680px;
+      margin-bottom: var(--sp-12);
+    }
+    .searches-headline {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(2rem, 2.75vw, 3rem);
+      line-height: 1.15;
+      color: var(--c-fg);
+      margin-top: var(--sp-3);
+      margin-bottom: var(--sp-4);
+    }
+    .searches-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      line-height: 1.85;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--c-border);
+      border-left: 1px solid var(--c-border);
+    }
+    .search-card {
+      border-right: 1px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+      padding: var(--sp-8) var(--sp-6);
+    }
+    .search-card-query {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.125rem, 1.75vw, 1.5rem);
+      color: var(--c-fg);
+      line-height: 1.3;
+      margin-bottom: var(--sp-3);
+    }
+    .search-card-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      line-height: 1.8;
+    }
+
+    /* ─── THREE PILLARS: DISCOVERY / VISIBILITY / DISTRIBUTION ─── */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--c-border);
+    }
+    .pillar {
+      padding: var(--sp-8) var(--sp-6) var(--sp-8) 0;
+      border-right: 1px solid var(--c-border);
+    }
+    .pillar:last-child { border-right: none; padding-right: 0; padding-left: var(--sp-6); }
+    .pillar:not(:first-child):not(:last-child) { padding-left: var(--sp-6); }
+
+    .pillar-number {
+      font-family: var(--f-serif);
+      font-weight: 300;
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      line-height: 1;
+      color: var(--c-border-2);
+      margin-bottom: var(--sp-4);
+    }
+    .pillar-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      margin-bottom: var(--sp-3);
+      font-family: var(--f-sans);
+      display: block;
+    }
+    .pillar-body {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      line-height: 1.85;
+    }
+
+    /* ─── WHAT LISTING INCLUDES ─── */
+    .includes-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: var(--sp-16);
+      align-items: start;
+    }
+    .includes-heading {
+      font-size: clamp(2rem, 2.5vw, 3rem);
+      margin-top: var(--sp-6);
+    }
+    .includes-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .include-item {
+      padding: var(--sp-6) var(--sp-6) var(--sp-6) 0;
+      border-top: 1px solid var(--c-border);
+    }
+    .include-item:nth-child(even) {
+      padding-left: var(--sp-6);
+      padding-right: 0;
+      border-left: 1px solid var(--c-border);
+    }
+    .include-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-fg-2);
+      margin-bottom: var(--sp-2);
+      font-family: var(--f-sans);
+    }
+    .include-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--c-fg);
+      line-height: 1.75;
+    }
+
+    /* ─── GET IN TOUCH ─── */
+    .get-in-touch {
+      padding: var(--sp-16) var(--gutter);
+      border-top: 1px solid var(--c-border);
+      background: var(--c-fg);
+      color: var(--c-bg);
+    }
+    .get-in-touch-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-16);
+      align-items: center;
+    }
+    .get-in-touch-heading {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(2rem, 3vw, 3.5rem);
+      line-height: 1.12;
+      color: var(--c-bg);
+      margin-top: var(--sp-4);
+    }
+    .get-in-touch-eyebrow { color: rgba(247,245,241,.4); }
+
+    .contact-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-6);
+    }
+    .contact-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(247,245,241,.65);
+      line-height: 1.8;
+    }
+    .contact-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-bg);
+      transition: gap 260ms var(--ease);
+    }
+    .contact-email:hover { gap: 22px; }
+    .contact-email-line {
+      width: 22px;
+      height: 1px;
+      background: var(--c-bg);
+      flex-shrink: 0;
+      transition: width 260ms var(--ease);
+    }
+    .contact-email:hover .contact-email-line { width: 32px; }
+
+    /* ─── FOOTER ─── */
+    .site-footer { border-top: 1px solid var(--c-border); padding: var(--sp-12) var(--gutter) var(--sp-8); }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 200px repeat(3, 1fr);
+      gap: var(--sp-8);
+      padding-bottom: var(--sp-8);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .footer-brand-name {
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 0.38em;
+      word-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      display: block;
+      margin-bottom: var(--sp-4);
+    }
+    .footer-brand-line { font-size: 11px; font-weight: 300; color: var(--c-fg-2); line-height: 1.75; }
+    .footer-col-label { display: block; font-size: 10px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-fg-2); margin-bottom: var(--sp-3); }
+    .footer-links { display: flex; flex-direction: column; gap: 11px; }
+    .footer-links a { font-size: 12px; font-weight: 300; color: var(--c-fg); letter-spacing: 0.02em; transition: color 200ms var(--ease); }
+    .footer-links a:hover { color: var(--c-fg-2); }
+    .footer-bottom { padding-top: var(--sp-4); display: flex; justify-content: space-between; align-items: center; }
+    .footer-copyright { font-size: 10px; color: var(--c-fg-3); letter-spacing: 0.05em; }
+    .footer-legal { display: flex; gap: var(--sp-4); }
+    .footer-legal a { font-size: 10px; color: var(--c-fg-3); letter-spacing: 0.05em; transition: color 200ms var(--ease); }
+    .footer-legal a:hover { color: var(--c-fg-2); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      :root { --gutter: 32px; }
+      .sell-hero-inner { grid-template-columns: 1fr; gap: var(--sp-8); }
+      .sell-hero-heading { font-size: clamp(2.5rem, 6vw, 4rem); }
+      .pillars-grid { grid-template-columns: 1fr 1fr; }
+      .pillar:nth-child(2) { border-right: none; }
+      .pillar:nth-child(3) { border-top: 1px solid var(--c-border); padding-left: 0; border-right: none; grid-column: 1 / -1; }
+      .includes-layout { grid-template-columns: 1fr; gap: var(--sp-8); }
+      .get-in-touch-inner { grid-template-columns: 1fr; gap: var(--sp-8); }
+      .footer-top { grid-template-columns: repeat(3, 1fr); }
+      .footer-top > :first-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --gutter: 24px; --sp-16: 96px; }
+      .nav-back { display: none; }
+      .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-shell { grid-template-columns: 40px 1fr 40px; }
+
+      .search-grid { grid-template-columns: 1fr; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .pillar { padding-left: 0 !important; border-right: none !important; border-top: 1px solid var(--c-border); }
+      .pillar:first-child { border-top: none; }
+      .includes-items { grid-template-columns: 1fr; }
+      .include-item:nth-child(even) { padding-left: 0; border-left: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: var(--sp-8); }
+      .footer-top > :first-child { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
+    }
+
+    @media (max-width: 480px) {
+      :root { --gutter: 20px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-legal { flex-direction: column; gap: var(--sp-2); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════ -->
+  <header class="site-header" role="banner" id="site-header">
+    <div class="nav-shell">
+
+      <a href="index.html" class="nav-back" aria-label="Back to IGAN VNTG">
+        <span class="nav-back-arrow" aria-hidden="true">←</span>
+        IGAN VNTG
+      </a>
+
+      <div style="text-align:center;">
+        <a href="index.html" class="wordmark" aria-label="IGAN VNTG — Return to homepage">IGAN VNTG</a>
+      </div>
+
+      <div class="nav-cta">
+        <a href="mailto:hello@iganvntg.com" aria-label="Get in touch to list your boutique">Get in touch</a>
+      </div>
+
+      <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ══════════════════════════════════════════
+         HERO
+         Lead with the problem boutique owners have.
+         Not with aesthetics. Not with features.
+         With the business reality they recognize.
+    ══════════════════════════════════════════ -->
+    <section class="sell-hero" aria-labelledby="sell-hero-id">
+      <div class="sell-hero-inner">
+
+        <div>
+          <span class="t-eyebrow">For Boutiques</span>
+          <h1 class="t-serif-display sell-hero-heading" id="sell-hero-id">
+            Your inventory<br>
+            is already being<br>
+            searched for.
+          </h1>
+        </div>
+
+        <div class="sell-hero-right">
+          <p class="sell-hero-body">
+            Buyers search for "vintage Chanel Toronto" and "Prada bag under $2,000" every day.
+            They find brand websites, editorial content, and large resale aggregators.
+            They do not find independent boutiques.
+            <br><br>
+            A buyer in Montreal should be able to discover your inventory in Amsterdam.
+            A buyer in Vancouver should be able to find your boutique in Berlin.
+            That is the infrastructure IGAN VNTG is building.
+            <br><br>
+            List your boutique and get found by buyers anywhere who are already searching for exactly what you carry.
+          </p>
+          <a href="onboard-step1.html" class="arrow-cta" aria-label="Get in touch to list your boutique">
+            Get in touch
+            <span class="arrow-cta-line" aria-hidden="true"></span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         THE SEARCHES — proof of demand
+         Make boutique owners recognise the searches.
+         These are buyers looking for what they carry.
+    ══════════════════════════════════════════ -->
+    <section class="s-section reveal" aria-labelledby="searches-id">
+      <div class="s-inner">
+        <div class="searches-header">
+          <span class="t-eyebrow" id="searches-id">Search</span>
+          <h2 class="searches-headline">
+            The searches are<br>already happening.
+          </h2>
+          <p class="searches-sub">
+            These are real searches buyers make. None of them lead to boutique websites — they lead to brand pages, editorial content, and resale aggregators. IGAN VNTG captures this demand and routes it to the boutiques that carry the inventory.
+          </p>
+        </div>
+
+        <div class="search-grid" role="list">
+
+          <div class="search-card" role="listitem">
+            <p class="search-card-query">Chanel Resort 2013</p>
+            <p class="search-card-desc">A buyer who knows exactly what they want. Today they find brand editorial. With IGAN VNTG, they find your inventory.</p>
+          </div>
+
+          <div class="search-card" role="listitem">
+            <p class="search-card-query">Burgundy Fendi Baguette</p>
+            <p class="search-card-desc">High-intent, specific, ready to buy. This buyer exists. They are not finding boutiques. They should be finding yours.</p>
+          </div>
+
+          <div class="search-card" role="listitem">
+            <p class="search-card-query">Margiela for Hermès under $4,000</p>
+            <p class="search-card-desc">A collector with deep knowledge and a clear budget. The most valuable buyer in vintage. Currently unreachable by boutique websites alone.</p>
+          </div>
+
+          <div class="search-card" role="listitem">
+            <p class="search-card-query">Black Chanel bag in Toronto under $3,000</p>
+            <p class="search-card-desc">Location, item, price. Purchase intent is explicit. This search should route directly to the boutique in Toronto that has it.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         THREE PILLARS
+         Discovery. Visibility. Distribution.
+         These are the three things boutique owners
+         are actually asking about.
+    ══════════════════════════════════════════ -->
+    <section class="s-section reveal" aria-labelledby="pillars-id">
+      <div class="s-inner">
+
+        <span class="t-eyebrow" id="pillars-id" style="display:block; margin-bottom: var(--sp-8);">Why it matters</span>
+
+        <div class="pillars-grid">
+
+          <div class="pillar">
+            <p class="pillar-number" aria-hidden="true">01</p>
+            <span class="pillar-label">Discovery</span>
+            <p class="pillar-body">
+              Buyers discover your inventory without knowing your boutique exists.
+              Every search for "vintage Hermès Toronto" or "Prada archive pieces"
+              becomes a potential first-time customer who would never have found you through Instagram or word of mouth.
+            </p>
+          </div>
+
+          <div class="pillar">
+            <p class="pillar-number" aria-hidden="true">02</p>
+            <span class="pillar-label">Visibility</span>
+            <p class="pillar-body">
+              Every listing creates searchable pages — by designer, collection, city, and year.
+              Your boutique appears in searches it would never rank for independently.
+              Long-tail search visibility compounds over time as your inventory grows on the platform.
+            </p>
+          </div>
+
+          <div class="pillar">
+            <p class="pillar-number" aria-hidden="true">03</p>
+            <span class="pillar-label">Distribution</span>
+            <p class="pillar-body">
+              IGAN VNTG becomes a customer acquisition channel separate from Instagram and Shopify.
+              High-intent buyers who already know what they want find you through search — not through scrolling.
+              We are building the place where buyers begin their vintage search in Canada.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         WHAT LISTING INCLUDES
+         Concrete deliverables. No vague promises.
+    ══════════════════════════════════════════ -->
+    <section class="s-section reveal" aria-labelledby="includes-id">
+      <div class="s-inner">
+        <div class="includes-layout">
+
+          <div>
+            <span class="t-eyebrow" id="includes-id">What you get</span>
+            <h2 class="t-serif-display includes-heading">
+              What listing<br>includes.
+            </h2>
+          </div>
+
+          <div class="includes-items">
+
+            <div class="include-item">
+              <p class="include-label">Searchable Boutique Profile</p>
+              <p class="include-desc">A dedicated page for your boutique, searchable by name, location, and specialty. Buyers browse boutiques, not just products.</p>
+            </div>
+
+            <div class="include-item">
+              <p class="include-label">Inventory Search Index</p>
+              <p class="include-desc">Every piece you list is indexed and searchable across all dimensions — designer, colour, year, price, condition, and collection.</p>
+            </div>
+
+            <div class="include-item">
+              <p class="include-label">Designer & Collection Pages</p>
+              <p class="include-desc">Your inventory appears on designer pages (e.g. Chanel, Prada) and collection pages — surfaces with existing search demand that your boutique website can't capture alone.</p>
+            </div>
+
+            <div class="include-item">
+              <p class="include-label">Long-term SEO</p>
+              <p class="include-desc">As IGAN VNTG grows in Google search rankings, your boutique's discoverability grows with it. We are building the platform that buyers find first when they search for vintage in Canada.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         GET IN TOUCH
+    ══════════════════════════════════════════ -->
+    <section class="get-in-touch" aria-labelledby="contact-id">
+      <div class="get-in-touch-inner">
+
+        <div>
+          <span class="t-eyebrow get-in-touch-eyebrow">List Your Boutique</span>
+          <h2 class="t-serif-display get-in-touch-heading" id="contact-id">
+            Ready to get<br>
+            your inventory found?
+          </h2>
+        </div>
+
+        <div class="contact-block">
+          <p class="contact-sub">
+            We are currently onboarding boutiques in Canada. If you carry designer vintage and want your inventory to be discoverable through search, get in touch.
+          </p>
+          <a href="onboard-step1.html" class="contact-email" aria-label="Email IGAN VNTG to list your boutique">
+            hello@iganvntg.com
+            <span class="contact-email-line" aria-hidden="true"></span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+
+        <div>
+          <span class="footer-brand-name" aria-label="IGAN VNTG">IGAN VNTG</span>
+          <p class="footer-brand-line">
+            A marketplace for<br>
+            designer vintage.
+          </p>
+        </div>
+
+        <nav aria-label="Shop navigation">
+          <span class="footer-col-label">Shop</span>
+          <ul class="footer-links">
+            <li><a href="index.html">Browse Boutiques</a></li>
+            <li><a href="index.html">Browse Designers</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Boutiques navigation">
+          <span class="footer-col-label">Boutiques</span>
+          <ul class="footer-links">
+            <li><a href="#pillars-id">Discovery</a></li>
+            <li><a href="#pillars-id">Visibility</a></li>
+            <li><a href="#pillars-id">Distribution</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Company navigation">
+          <span class="footer-col-label">Company</span>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="mailto:hello@iganvntg.com">Contact</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2025 IGAN VNTG. All rights reserved.</p>
+        <ul class="footer-legal" aria-label="Legal links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+
+    /* Scroll Reveal */
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.06, rootMargin: '0px 0px -32px 0px' });
+      els.forEach(function (el) { io.observe(el); });
+    }());
+
+    /* Header scroll state */
+    (function () {
+      var hdr = document.getElementById('site-header');
+      if (!hdr) return;
+      var raf = null;
+      window.addEventListener('scroll', function () {
+        if (raf) return;
+        raf = requestAnimationFrame(function () {
+          hdr.classList.toggle('scrolled', window.scrollY > 8);
+          raf = null;
+        });
+      }, { passive: true });
+    }());
+  </script>
+
+</body>
+</html>
