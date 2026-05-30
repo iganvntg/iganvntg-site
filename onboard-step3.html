@@ -262,11 +262,21 @@ if(data.connected&&data.product_count){
   document.getElementById('chk-inv-label').textContent=data.product_count+' products synced';
 }
 
+var SHEETS_URL='https://script.google.com/macros/s/AKfycbzj9cfK1nypdO9NILV6xwCueufmRsK6EK9gU3gcmQ-LeMdAVafQfengwFWu_E3KxCVj/exec';
+
 function goLive(){
   data.live=true;
   data.live_at=new Date().toISOString();
   data.description=document.getElementById('b-desc').value.trim();
   localStorage.setItem('igan_onboard',JSON.stringify(data));
+
+  /* Send to Google Sheets */
+  fetch(SHEETS_URL,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  }).catch(function(err){console.warn('Sheets sync failed:',err)});
 
   document.getElementById('review-form').style.display='none';
   var c=document.getElementById('confirm-screen');
