@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IGAN VNTG — The search engine for luxury vintage. Discover designer pieces from independent boutiques worldwide." />
+  <meta name="google-site-verification" content="vuh1XXFvNXtvuOi93VrC0NfRisMdPYYFzYZQwf5VxA8" />
+  <title>IGAN VNTG — Discover Luxury Vintage</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --c-bg:           #F7F5F1;
+      --c-surface:      #F0EDE7;
+      --c-fg:           #1A1917;
+      --c-fg-2:         #8A857D;
+      --c-fg-3:         #B8B3AB;
+      --c-border:       #E0DAD1;
+      --c-border-2:     #C8C1B6;
+      --f-serif:        'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --f-sans:         'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --sp-1:  8px;
+      --sp-2:  16px;
+      --sp-3:  24px;
+      --sp-4:  32px;
+      --sp-6:  48px;
+      --sp-8:  64px;
+      --sp-12: 96px;
+      --sp-16: 128px;
+      --sp-24: 192px;
+      --gutter:    48px;
+      --max-w:     1440px;
+      --ease:      cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      background: var(--c-bg);
+      color: var(--c-fg);
+      font-family: var(--f-sans);
+      font-weight: 300;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a   { color: inherit; text-decoration: none; cursor: pointer; }
+    button { background: none; border: none; cursor: pointer; font: inherit; color: inherit; padding: 0; }
+    ul, ol { list-style: none; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    :focus-visible { outline: 1px solid var(--c-fg); outline-offset: 3px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 800ms var(--ease), transform 800ms var(--ease);
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 120ms; }
+    .reveal-delay-2 { transition-delay: 240ms; }
+    .reveal-delay-3 { transition-delay: 360ms; }
+
+    .t-eyebrow {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-fg-2);
+    }
+
+    .t-link-underline {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 2px;
+      transition: opacity 220ms var(--ease);
+      display: inline-block;
+    }
+    .t-link-underline:hover { opacity: 0.45; }
+
+    /* ANNOUNCEMENT */
+    .announcement {
+      background: var(--c-fg);
+      color: var(--c-bg);
+      padding: 11px var(--gutter);
+      text-align: center;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    /* HEADER */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--c-bg);
+      border-bottom: 1px solid var(--c-border);
+      transition: border-color 300ms var(--ease);
+    }
+    .site-header.scrolled { border-bottom-color: var(--c-border-2); }
+
+    .nav-shell {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+      height: 60px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+
+    .nav-primary { display: flex; align-items: center; gap: var(--sp-8); }
+    .nav-primary a {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      position: relative;
+    }
+    .nav-primary a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--c-fg);
+      transition: width 280ms var(--ease);
+    }
+    .nav-primary a:hover::after { width: 100%; }
+
+    .wordmark {
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 0.42em;
+      word-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+    }
+    .wordmark:hover { opacity: 0.55; transition: opacity 240ms var(--ease); }
+
+    .nav-utility { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-6); }
+    .nav-utility a {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      transition: color 200ms var(--ease);
+    }
+    .nav-utility a:hover { color: var(--c-fg-2); }
+
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 6px 2px; }
+    .nav-hamburger span { display: block; width: 20px; height: 1px; background: var(--c-fg); transition: opacity 200ms var(--ease); }
+
+    /* MOBILE NAV DRAWER */
+    #mob-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: var(--c-bg);
+      flex-direction: column;
+      padding: 0 var(--gutter);
+      opacity: 0;
+      transition: opacity 320ms var(--ease);
+      overflow-y: auto;
+    }
+    #mob-drawer.open { display: flex; opacity: 1; }
+
+    .mob-drawer-header {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--c-border);
+      flex-shrink: 0;
+    }
+
+    .mob-drawer-wordmark {
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 0.42em;
+      word-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+    }
+
+    .mob-drawer-close { font-size: 22px; color: var(--c-fg-3); padding: 4px; line-height: 1; transition: color 200ms; }
+    .mob-drawer-close:hover { color: var(--c-fg); }
+
+    .mob-drawer-nav { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0; padding: var(--sp-8) 0; }
+
+    .mob-drawer-link {
+      display: block;
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.75rem, 7vw, 2.25rem);
+      color: var(--c-fg);
+      line-height: 1.2;
+      padding: 0.6em 0;
+      border-bottom: 1px solid var(--c-border);
+      transition: color 200ms var(--ease), padding-left 240ms var(--ease);
+      letter-spacing: -0.01em;
+    }
+    .mob-drawer-link:first-child { border-top: 1px solid var(--c-border); }
+    .mob-drawer-link:hover { color: var(--c-fg-2); padding-left: 8px; }
+
+    .mob-drawer-link.small {
+      font-family: var(--f-sans);
+      font-style: normal;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-fg-3);
+      padding: 0.9em 0;
+    }
+    .mob-drawer-link.small:hover { color: var(--c-fg-2); padding-left: 8px; }
+
+    .mob-drawer-cta { flex-shrink: 0; padding: var(--sp-4) 0 var(--sp-6); border-top: 1px solid var(--c-border); }
+
+    #mob-request-access {
+      width: 100%;
+      background: var(--c-fg);
+      color: var(--c-bg);
+      border: none;
+      padding: 1rem;
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 200ms;
+    }
+    #mob-request-access:hover { opacity: 0.8; }
+
+    /* SEARCH HERO */
+    .search-hero {
+      min-height: calc(100dvh - 60px - 41px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-12) var(--gutter);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .search-hero-inner {
+      width: 100%;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .search-hero-wordmark {
+      font-family: var(--f-sans);
+      font-size: clamp(13px, 1.2vw, 17px);
+      font-weight: 200;
+      letter-spacing: 0.5em;
+      word-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      display: block;
+      margin-bottom: var(--sp-3);
+    }
+
+    .search-hero-descriptor {
+      font-family: var(--f-serif);
+      font-style: normal;
+      font-weight: 300;
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      line-height: 1.55;
+      letter-spacing: 0.01em;
+      color: var(--c-fg-2);
+      margin-bottom: var(--sp-12);
+    }
+
+    .search-examples { margin-top: var(--sp-4); display: flex; flex-direction: column; align-items: center; gap: 5px; }
+
+    .search-example {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 13px;
+      color: var(--c-fg-3);
+      background: none;
+      border: none;
+      padding: 4px 0;
+      cursor: pointer;
+      transition: color 220ms var(--ease);
+      line-height: 1.5;
+    }
+    .search-example:hover { color: var(--c-fg-2); }
+    .search-example:focus-visible { outline: 1px solid var(--c-fg); outline-offset: 3px; }
+
+    .search-browse-links {
+      margin-top: var(--sp-12);
+      padding-top: var(--sp-6);
+      border-top: 1px solid var(--c-border);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: var(--sp-8);
+    }
+
+    /* SEARCH FORM */
+    .search-form {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--c-fg);
+      transition: border-color 240ms var(--ease);
+      gap: var(--sp-3);
+    }
+
+    .search-input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      padding: var(--sp-3) 0;
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      color: var(--c-fg);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      width: 100%;
+    }
+    .search-input::placeholder { color: var(--c-fg-2); transition: opacity 400ms var(--ease); }
+    .search-input.placeholder-fade::placeholder { opacity: 0; }
+
+    .search-btn {
+      flex-shrink: 0;
+      padding: var(--sp-3) 0 var(--sp-3) var(--sp-3);
+      color: var(--c-fg-2);
+      transition: color 220ms var(--ease);
+      display: flex;
+      align-items: center;
+    }
+    .search-btn:hover { color: var(--c-fg); }
+
+    .search-hint {
+      margin-top: var(--sp-3);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-fg-3);
+      font-family: var(--f-sans);
+      font-style: normal;
+    }
+
+    /* EMPTY SEARCH STATE — hidden until search submitted */
+    #search-empty-state {
+      display: none;
+      margin-top: var(--sp-6);
+      padding: var(--sp-4);
+      border: 1px solid var(--c-border);
+      text-align: center;
+      animation: iv-rise 0.3s var(--ease);
+    }
+    .search-empty-headline {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: var(--c-fg);
+      margin-bottom: 0.4rem;
+    }
+    .search-empty-body {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      line-height: 1.75;
+      margin-bottom: var(--sp-3);
+    }
+    .search-empty-link {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      border-bottom: 1px solid var(--c-fg);
+      padding-bottom: 2px;
+      transition: opacity 200ms;
+    }
+    .search-empty-link:hover { opacity: 0.45; }
+
+    /* REQUEST ACCESS CTA */
+    .request-access-wrap {
+      padding: var(--sp-8) var(--gutter) var(--sp-4);
+      text-align: center;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    #iv-trigger {
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--c-fg);
+      padding-bottom: 3px;
+      cursor: pointer;
+      transition: opacity 220ms var(--ease);
+    }
+    #iv-trigger:hover { opacity: 0.45; }
+
+    /* FOUNDER NOTE */
+    .founder-section { padding: var(--sp-16) var(--gutter); border-bottom: 1px solid var(--c-border); }
+    .founder-inner { max-width: 600px; margin: 0 auto; }
+
+    .founder-eyebrow {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-fg-3);
+      margin-bottom: var(--sp-6);
+      display: block;
+    }
+
+    .founder-text {
+      font-family: var(--f-serif);
+      font-weight: 300;
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
+      color: var(--c-fg-2);
+      line-height: 1.9;
+      margin-bottom: 1.1em;
+    }
+    .founder-text em { font-style: italic; color: var(--c-fg); }
+    .founder-text strong { font-weight: 400; color: var(--c-fg); font-style: normal; }
+
+    .founder-sig {
+      font-family: var(--f-serif);
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      margin-top: var(--sp-4);
+      display: block;
+    }
+
+    .founder-ps {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--c-fg-3);
+      margin-top: 14px;
+      display: block;
+    }
+
+    /* BROWSE DESIGNERS */
+    .browse-designers { padding: var(--sp-16) var(--gutter); border-top: 1px solid var(--c-border); }
+    .browse-designers-inner { max-width: var(--max-w); margin: 0 auto; }
+    .browse-designers-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-8); }
+    .designers-list { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .designer-item {
+      padding: var(--sp-3) 0;
+      border-top: 1px solid var(--c-border);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--c-fg);
+      display: block;
+      transition: padding-left 260ms var(--ease), color 200ms var(--ease);
+    }
+    .designer-item:hover { padding-left: 10px; }
+
+    /* BOUTIQUE STRIP */
+    .boutique-strip { border-top: 1px solid var(--c-border); padding: var(--sp-6) var(--gutter); }
+    .boutique-strip-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .boutique-strip-text { font-size: 12px; font-weight: 300; color: var(--c-fg-2); letter-spacing: 0.03em; }
+
+    /* FOOTER */
+    .site-footer { border-top: 1px solid var(--c-border); padding: var(--sp-16) var(--gutter) var(--sp-8); }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 200px repeat(4, 1fr);
+      gap: var(--sp-12);
+      padding-bottom: var(--sp-12);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .footer-brand-name {
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 0.38em;
+      word-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      display: block;
+      margin-bottom: var(--sp-4);
+    }
+    .footer-brand-line { font-size: 11px; font-weight: 300; color: var(--c-fg-2); line-height: 1.75; }
+
+    .footer-col-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-fg-2);
+      margin-bottom: var(--sp-3);
+    }
+
+    .footer-links { display: flex; flex-direction: column; gap: 11px; }
+    .footer-links a { font-size: 12px; font-weight: 300; color: var(--c-fg); letter-spacing: 0.02em; transition: color 200ms var(--ease); }
+    .footer-links a:hover { color: var(--c-fg-2); }
+
+    .footer-bottom { padding-top: var(--sp-4); display: flex; justify-content: space-between; align-items: center; }
+    .footer-copyright { font-size: 10px; color: var(--c-fg-3); letter-spacing: 0.05em; }
+    .footer-legal { display: flex; gap: var(--sp-4); }
+    .footer-legal a { font-size: 10px; color: var(--c-fg-3); letter-spacing: 0.05em; transition: color 200ms var(--ease); }
+    .footer-legal a:hover { color: var(--c-fg-2); }
+
+    /* MODAL */
+    #iv-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,25,23,0.5);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(2px);
+    }
+    #iv-overlay.open { display: flex; }
+
+    #iv-modal {
+      background: var(--c-bg);
+      max-width: 420px;
+      width: 100%;
+      padding: 2.75rem 2.5rem 2.25rem;
+      position: relative;
+      animation: iv-rise 0.3s var(--ease);
+      border: 1px solid var(--c-border);
+    }
+    @keyframes iv-rise {
+      from { opacity:0; transform: translateY(14px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    #iv-close {
+      position: absolute;
+      top: 1.25rem; right: 1.25rem;
+      background: none; border: none;
+      cursor: pointer;
+      color: var(--c-fg-3);
+      font-size: 18px;
+      line-height: 1;
+      padding: 4px;
+      transition: color 200ms;
+    }
+    #iv-close:hover { color: var(--c-fg); }
+
+    .iv-modal-label { font-family: var(--f-sans); font-size: 10px; letter-spacing: 0.2em; color: var(--c-fg-3); text-transform: uppercase; margin: 0 0 1.5rem; display: block; }
+    .iv-modal-headline { font-family: var(--f-serif); font-style: italic; font-size: 22px; font-weight: 300; color: var(--c-fg); margin: 0 0 0.5rem; line-height: 1.3; }
+    .iv-modal-body { font-size: 13px; font-weight: 300; color: var(--c-fg-2); line-height: 1.8; margin: 0 0 2rem; }
+
+    .iv-field {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--c-border);
+      padding: 0.65rem 0;
+      font-size: 13px;
+      font-family: var(--f-sans);
+      font-weight: 300;
+      color: var(--c-fg);
+      outline: none;
+      margin-bottom: 1.1rem;
+      transition: border-color 220ms;
+    }
+    .iv-field:focus { border-color: var(--c-fg-2); }
+    .iv-field::placeholder { color: var(--c-fg-3); }
+
+    select.iv-field { appearance: none; -webkit-appearance: none; cursor: pointer; color: var(--c-fg-3); }
+    select.iv-field.has-value { color: var(--c-fg); }
+
+    .iv-privacy { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 1.5rem; }
+    .iv-privacy input[type="checkbox"] { margin-top: 3px; accent-color: var(--c-fg); flex-shrink: 0; }
+    .iv-privacy label { font-size: 11px; font-weight: 300; color: var(--c-fg-3); line-height: 1.6; }
+    .iv-privacy a { color: var(--c-fg-2); border-bottom: 1px solid var(--c-border); }
+    .iv-privacy a:hover { color: var(--c-fg); }
+
+    #iv-submit {
+      width: 100%;
+      background: var(--c-fg);
+      color: var(--c-bg);
+      border: none;
+      padding: 0.9rem;
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 200ms;
+    }
+    #iv-submit:hover:not(:disabled) { opacity: 0.8; }
+    #iv-submit:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    #iv-error { display: none; font-size: 11px; color: #9b3535; margin-top: 0.75rem; text-align: center; letter-spacing: 0.03em; }
+
+    #iv-success { display: none; text-align: center; padding: 2rem 0; }
+    #iv-success p { font-family: var(--f-serif); font-style: italic; font-size: 20px; font-weight: 300; color: var(--c-fg); letter-spacing: 0.02em; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1280px) {
+      :root { --gutter: 40px; }
+      .footer-top { grid-template-columns: 180px repeat(3, 1fr); }
+    }
+    @media (max-width: 1024px) {
+      :root { --gutter: 32px; }
+      .nav-primary { gap: var(--sp-6); }
+      .footer-top { grid-template-columns: repeat(3, 1fr); }
+      .footer-top > :first-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 768px) {
+      :root { --gutter: 24px; --sp-16: 96px; }
+      .nav-primary, .nav-utility { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-shell { grid-template-columns: 40px 1fr 40px; }
+      .search-hero { padding: var(--sp-8) var(--gutter); }
+      .search-browse-links { gap: var(--sp-4); }
+      .designers-list { grid-template-columns: repeat(2, 1fr); }
+      .boutique-strip-inner { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: var(--sp-8); }
+      .footer-top > :first-child { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
+      #iv-modal { padding: 2.25rem 1.75rem 2rem; }
+    }
+    @media (min-width: 769px) { #mob-drawer { display: none !important; } }
+    @media (max-width: 480px) {
+      :root { --gutter: 20px; }
+      .designers-list { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-legal { flex-direction: column; gap: var(--sp-2); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="announcement" role="status">
+    The search engine for luxury vintage — independent boutiques, worldwide.
+  </div>
+
+  <header class="site-header" role="banner" id="site-header">
+    <div class="nav-shell">
+      <nav aria-label="Primary navigation">
+        <ul class="nav-primary">
+          <li><a href="#">Boutiques</a></li>
+          <li><a href="#">Designers</a></li>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="sell.html">Sell With Us</a></li>
+        </ul>
+      </nav>
+      <div style="text-align:center;">
+        <a href="/" class="wordmark" aria-label="IGAN VNTG — Return to homepage">IGAN VNTG</a>
+      </div>
+      <nav aria-label="Utility navigation">
+        <ul class="nav-utility">
+          <li><a href="#" aria-label="Search">Search</a></li>
+          <li><a href="#" aria-label="Saved pieces">Saved</a></li>
+          <li><a href="#" aria-label="Your account">Account</a></li>
+          <li><a href="#" aria-label="Shopping bag, 0 items">Bag (0)</a></li>
+        </ul>
+      </nav>
+      <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <section class="search-hero" aria-label="Search IGAN VNTG">
+      <div class="search-hero-inner">
+        <span class="search-hero-wordmark" aria-hidden="true">IGAN VNTG</span>
+        <p class="search-hero-descriptor">
+          Discover designer vintage from independent boutiques.
+        </p>
+        <form class="search-form" role="search" action="#" method="get" id="main-search" style="width:100%;">
+          <label for="search-input" class="sr-only">Search designer vintage</label>
+          <input
+            class="search-input"
+            type="search"
+            id="search-input"
+            name="q"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Margiela for Hermes, under $4,000"
+          />
+          <button type="submit" class="search-btn" aria-label="Search">
+            <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true">
+              <line x1="0" y1="5" x2="14" y2="5" stroke="currentColor" stroke-width="1"/>
+              <polyline points="10,1 14,5 10,9" fill="none" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </button>
+        </form>
+        <p class="search-hint">
+          Designer &nbsp;·&nbsp; Collection &nbsp;·&nbsp; Colour &nbsp;·&nbsp; Year &nbsp;·&nbsp; City &nbsp;·&nbsp; Country &nbsp;·&nbsp; Boutique &nbsp;·&nbsp; Price &nbsp;·&nbsp; Condition
+        </p>
+        <div id="search-empty-state" role="status" aria-live="polite">
+          <p class="search-empty-headline">We're onboarding our first boutiques now.</p>
+          <p class="search-empty-body">Be among the first to be found here.</p>
+          <a href="sell.html" class="search-empty-link">List your boutique</a>
+        </div>
+        <div class="search-examples" role="list" aria-label="Example searches">
+          <button class="search-example" type="button" role="listitem">Margiela for Hermes under $4,000</button>
+          <button class="search-example" type="button" role="listitem">Chanel Resort 2013</button>
+          <button class="search-example" type="button" role="listitem">Black Chanel bag Toronto under $3,000</button>
+        </div>
+        <div class="search-browse-links">
+          <a href="#" class="t-link-underline">Browse Boutiques</a>
+          <a href="#" class="t-link-underline">Browse Designers</a>
+          <a href="sell.html" class="t-link-underline">Sell With Us</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="request-access-wrap">
+      <button id="iv-trigger" aria-haspopup="dialog">Request access</button>
+    </div>
+
+    <section class="founder-section reveal" aria-label="A note from the founder">
+      <div class="founder-inner">
+        <span class="founder-eyebrow">A note from the founder</span>
+        <p class="founder-text"><em>I was supposed to be at brunch.</em></p>
+        <p class="founder-text">
+          Instead I ended up in a vintage store with my sister — somewhere in Toronto,
+          a city I've been figuring out for four years — and found something I'd been
+          searching for for months. Exactly what I wanted, from a boutique I'd never
+          heard of, three kilometres from my apartment.
+        </p>
+        <p class="founder-text">I started talking to a group of women in the store.</p>
+        <p class="founder-text">
+          Different cities. Different countries. Same problem — hours lost,
+          twenty-seven tabs open, DM'ing store pages on Instagram, watching things
+          sell out before they could even get to checkout.
+        </p>
+        <p class="founder-text">
+          The boutiques were incredible. The inventory was incredible.
+          <strong>They weren't unknown. They were undiscoverable.</strong>
+        </p>
+        <p class="founder-text">
+          This is not a Toronto problem. This is not a Canada problem. Extraordinary
+          boutiques exist in every city in the world and the right buyer will never
+          find them simply because there is no single place to look.
+        </p>
+        <p class="founder-text">
+          I have ADHD. I hyperfixate — and once I saw that problem I couldn't unsee it.
+        </p>
+        <p class="founder-text">The buyer and the boutique both deserve better.</p>
+        <p class="founder-text">
+          IGAN VNTG is built for the buyer with twenty-seven tabs open
+          and the boutique that should be on all of them.
+        </p>
+        <span class="founder-sig">— Saijal</span>
+        <span class="founder-ps">P.S. I'm still that girl in the store. I just built the thing I was looking for.</span>
+      </div>
+    </section>
+
+    <section class="browse-designers reveal" aria-labelledby="designers-id">
+      <div class="browse-designers-inner">
+        <div class="browse-designers-header">
+          <span class="t-eyebrow" id="designers-id">Browse Designers</span>
+          <a href="#" class="t-link-underline">All designers</a>
+        </div>
+        <nav aria-label="Browse by designer">
+          <div class="designers-list" role="list">
+            <a href="#" class="designer-item" role="listitem">The Row</a>
+            <a href="#" class="designer-item" role="listitem">Hermes</a>
+            <a href="#" class="designer-item" role="listitem">Bottega Veneta</a>
+            <a href="#" class="designer-item" role="listitem">Jil Sander</a>
+            <a href="#" class="designer-item" role="listitem">Maison Margiela</a>
+            <a href="#" class="designer-item" role="listitem">Loro Piana</a>
+            <a href="#" class="designer-item" role="listitem">Celine</a>
+            <a href="#" class="designer-item" role="listitem">Prada</a>
+            <a href="#" class="designer-item" role="listitem">Balenciaga</a>
+          </div>
+        </nav>
+      </div>
+    </section>
+
+    <div class="boutique-strip">
+      <div class="boutique-strip-inner">
+        <p class="boutique-strip-text">Are you a boutique owner?</p>
+        <a href="sell.html" class="t-link-underline">List your boutique on IGAN VNTG</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <span class="footer-brand-name" aria-label="IGAN VNTG">IGAN VNTG</span>
+          <p class="footer-brand-line">
+            The discovery platform for<br>
+            designer vintage.
+          </p>
+        </div>
+        <nav aria-label="Shop navigation">
+          <span class="footer-col-label">Shop</span>
+          <ul class="footer-links">
+            <li><a href="#">Browse Designers</a></li>
+            <li><a href="#">Browse Boutiques</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Boutiques navigation">
+          <span class="footer-col-label">Boutiques</span>
+          <ul class="footer-links">
+            <li><a href="sell.html">Sell With Us</a></li>
+            <li><a href="sell.html">List Your Boutique</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Company navigation">
+          <span class="footer-col-label">Company</span>
+          <ul class="footer-links">
+            <li><a href="our-story.html">Our Story</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Shipping &amp; Returns</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Legal navigation">
+          <span class="footer-col-label">Legal</span>
+          <ul class="footer-links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Cookies</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 IGAN VNTG. All rights reserved.</p>
+        <ul class="footer-legal" aria-label="Legal links">
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div id="iv-overlay" role="dialog" aria-modal="true" aria-labelledby="iv-modal-headline">
+    <div id="iv-modal">
+      <button id="iv-close" aria-label="Close">&times;</button>
+      <div id="iv-form-state">
+        <span class="iv-modal-label">Early access</span>
+        <h2 class="iv-modal-headline" id="iv-modal-headline">You're early. So are the best pieces.</h2>
+        <p class="iv-modal-body">Be notified first when boutiques go live in your country.</p>
+        <input class="iv-field" id="iv-email" type="email" placeholder="your@email.com" required autocomplete="email" aria-label="Email address" />
+        <select class="iv-field" id="iv-country" aria-label="Country (optional)">
+          <option value="" disabled selected>Country (optional)</option>
+          <option>Australia</option><option>Austria</option><option>Belgium</option>
+          <option>Brazil</option><option>Canada</option><option>China</option>
+          <option>Denmark</option><option>Finland</option><option>France</option>
+          <option>Germany</option><option>Greece</option><option>Hong Kong</option>
+          <option>India</option><option>Ireland</option><option>Italy</option>
+          <option>Japan</option><option>Mexico</option><option>Netherlands</option>
+          <option>New Zealand</option><option>Norway</option><option>Portugal</option>
+          <option>Saudi Arabia</option><option>Singapore</option><option>South Korea</option>
+          <option>Spain</option><option>Sweden</option><option>Switzerland</option>
+          <option>UAE</option><option>United Kingdom</option><option>United States</option>
+          <option>Other</option>
+        </select>
+        <div class="iv-privacy">
+          <input type="checkbox" id="iv-consent" />
+          <label for="iv-consent">
+            I agree to the <a href="privacy.html" target="_blank">privacy policy</a>.
+            No newsletters. No noise. Just access.
+          </label>
+        </div>
+        <button id="iv-submit" disabled>Secure my place</button>
+        <p id="iv-error">Something went wrong. Please try again.</p>
+      </div>
+      <div id="iv-success" role="status" aria-live="polite">
+        <p>You're on the list.</p>
+      </div>
+    </div>
+  </div>
+
+  <nav id="mob-drawer" aria-label="Mobile navigation" aria-hidden="true">
+    <div class="mob-drawer-header">
+      <span class="mob-drawer-wordmark" aria-hidden="true">IGAN VNTG</span>
+      <button class="mob-drawer-close" id="mob-close" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="mob-drawer-nav">
+      <a href="#" class="mob-drawer-link">Browse Boutiques</a>
+      <a href="#" class="mob-drawer-link">Browse Designers</a>
+      <a href="sell.html" class="mob-drawer-link">Sell With Us</a>
+      <a href="privacy.html" class="mob-drawer-link small">Privacy Policy</a>
+    </div>
+    <div class="mob-drawer-cta">
+      <button id="mob-request-access">Request access</button>
+    </div>
+  </nav>
+
+  <script>
+    'use strict';
+
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) { els.forEach(function(el){ el.classList.add('is-visible'); }); return; }
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+      }, { threshold: 0.06, rootMargin: '0px 0px -32px 0px' });
+      els.forEach(function(el){ io.observe(el); });
+    }());
+
+    (function () {
+      var hdr = document.getElementById('site-header');
+      if (!hdr) return;
+      var raf = null;
+      window.addEventListener('scroll', function() {
+        if (raf) return;
+        raf = requestAnimationFrame(function() { hdr.classList.toggle('scrolled', window.scrollY > 8); raf = null; });
+      }, { passive: true });
+    }());
+
+    (function () {
+      var drawer = document.getElementById('mob-drawer');
+      var hamburger = document.querySelector('.nav-hamburger');
+      var closeBtn = document.getElementById('mob-close');
+      var mobCTA = document.getElementById('mob-request-access');
+      var mainTrigger = document.getElementById('iv-trigger');
+      if (!drawer || !hamburger) return;
+      function openDrawer() {
+        drawer.style.display = 'flex';
+        requestAnimationFrame(function() { drawer.classList.add('open'); });
+        drawer.setAttribute('aria-hidden', 'false');
+        hamburger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        setTimeout(function() { if (!drawer.classList.contains('open')) drawer.style.display = 'none'; }, 340);
+        hamburger.focus();
+      }
+      hamburger.addEventListener('click', openDrawer);
+      closeBtn.addEventListener('click', closeDrawer);
+      drawer.addEventListener('click', function(e) { if (e.target === drawer) closeDrawer(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer(); });
+      if (mobCTA && mainTrigger) {
+        mobCTA.addEventListener('click', function() { closeDrawer(); setTimeout(function() { mainTrigger.click(); }, 360); });
+      }
+    }());
+
+    (function () {
+      var form = document.getElementById('main-search');
+      var emptyState = document.getElementById('search-empty-state');
+      var input = document.getElementById('search-input');
+      if (!form || !emptyState) return;
+      function showEmpty() { if (input.value.trim().length > 0) emptyState.style.display = 'block'; }
+      form.addEventListener('submit', function(e) { e.preventDefault(); showEmpty(); });
+      document.querySelectorAll('.search-example').forEach(function(btn) {
+        btn.addEventListener('click', function() { setTimeout(showEmpty, 50); });
+      });
+      input.addEventListener('input', function() { if (input.value.trim().length === 0) emptyState.style.display = 'none'; });
+    }());
+
+    (function () {
+      var examples = document.querySelectorAll('.search-example');
+      var input = document.getElementById('search-input');
+      if (!input) return;
+      examples.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          input.value = btn.textContent.trim();
+          input.focus();
+          var len = input.value.length;
+          input.setSelectionRange(len, len);
+        });
+      });
+    }());
+
+    (function () {
+      var input = document.getElementById('search-input');
+      if (!input) return;
+      var examples = [
+        'Margiela for Hermes, under $4,000','Chanel Resort 2013','Burgundy Fendi Baguette',
+        'Black Chanel bag in Toronto, under $3,000','Excellent condition Prada, 2001-2003',
+        'Prada nylon in Amsterdam','Issey Miyake archive in Tokyo',
+        'Helmut Lang 1998, Berlin','Vintage Hermes in Paris under $2,000','Bottega Veneta in London',
+      ];
+      var current = 0, paused = false, DISPLAY = 3800, FADE = 380;
+      function next() {
+        if (paused) return;
+        input.classList.add('placeholder-fade');
+        setTimeout(function() { current = (current + 1) % examples.length; input.placeholder = examples[current]; input.classList.remove('placeholder-fade'); }, FADE);
+      }
+      setInterval(next, DISPLAY);
+      input.addEventListener('focus', function() { paused = true; });
+      input.addEventListener('blur', function() {
+        paused = false;
+        if (!input.value) { input.classList.add('placeholder-fade'); setTimeout(function() { input.classList.remove('placeholder-fade'); }, FADE); }
+      });
+    }());
+
+    (function () {
+      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSMh83WudOwiE-bstaPnDexqULSkLEHuBRRNfk_0DJUw4_VUUYhT7DjYmGGtHs6Wb-/exec';
+      var overlay = document.getElementById('iv-overlay');
+      var trigger = document.getElementById('iv-trigger');
+      var closeBtn = document.getElementById('iv-close');
+      var submit = document.getElementById('iv-submit');
+      var consent = document.getElementById('iv-consent');
+      var country = document.getElementById('iv-country');
+      var formState = document.getElementById('iv-form-state');
+      var successEl = document.getElementById('iv-success');
+      var errorEl = document.getElementById('iv-error');
+
+      trigger.addEventListener('click', function() {
+        overlay.classList.add('open');
+        document.getElementById('iv-email').focus();
+        document.body.style.overflow = 'hidden';
+      });
+
+      function closeModal() { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+      consent.addEventListener('change', function() { submit.disabled = !consent.checked; });
+      country.addEventListener('change', function() { country.classList.toggle('has-value', country.value !== ''); });
+
+      submit.addEventListener('click', function() {
+        var email = document.getElementById('iv-email').value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('iv-email').focus(); return; }
+        submit.disabled = true;
+        submit.textContent = 'Securing...';
+        errorEl.style.display = 'none';
+        var params = new URLSearchParams(window.location.search);
+        var payload = { sheet: 'Waitlist', type: 'waitlist', source: 'homepage_modal', timestamp: new Date().toISOString(), email: email, country: country.value || '' };
+        ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function(k) { if (params.get(k)) payload[k] = params.get(k); });
+        fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function() { formState.style.display = 'none'; successEl.style.display = 'block'; })
+        .catch(function() { submit.disabled = false; submit.textContent = 'Secure my place'; errorEl.style.display = 'block'; });
+      });
+    }());
+  </script>
+
+</body>
+</html>
