@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IGAN VNTG Privacy Policy — how we collect, use, and protect your personal information." />
+  <title>Privacy Policy — IGAN VNTG</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --c-bg:       #F7F5F1;
+      --c-fg:       #1A1917;
+      --c-fg-2:     #8A857D;
+      --c-fg-3:     #B8B3AB;
+      --c-border:   #E0DAD1;
+      --f-serif:    'Cormorant Garamond', Georgia, serif;
+      --f-sans:     'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --gutter:     48px;
+      --max-w:      1440px;
+      --ease:       cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--c-bg);
+      color: var(--c-fg);
+      font-family: var(--f-sans);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { opacity: 0.55; }
+
+    .site-header {
+      border-bottom: 1px solid var(--c-border);
+      padding: 0 var(--gutter);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .wordmark {
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 0.42em;
+      word-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+    }
+
+    .back-link {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-fg-2);
+      border-bottom: 1px solid var(--c-border);
+      padding-bottom: 2px;
+    }
+
+    .page-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 96px var(--gutter) 128px;
+    }
+
+    .page-eyebrow {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-fg-3);
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(2rem, 3vw, 2.75rem);
+      line-height: 1.15;
+      color: var(--c-fg);
+      margin-bottom: 16px;
+    }
+
+    .page-date {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--c-fg-3);
+      margin-bottom: 64px;
+      display: block;
+    }
+
+    .policy-section {
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .policy-section:last-child {
+      border-bottom: none;
+    }
+
+    .policy-heading {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-fg-2);
+      margin-bottom: 16px;
+    }
+
+    .policy-body {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      line-height: 1.85;
+    }
+
+    .policy-body + .policy-body {
+      margin-top: 16px;
+    }
+
+    .policy-body a {
+      color: var(--c-fg);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--c-border);
+      padding: 32px var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 10px;
+      color: var(--c-fg-3);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      :root { --gutter: 24px; }
+      .page-inner { padding: 64px var(--gutter) 96px; }
+      .site-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <a href="/" class="wordmark" aria-label="IGAN VNTG — Return to homepage">IGAN VNTG</a>
+    <a href="/" class="back-link">← Back</a>
+  </header>
+
+  <main>
+    <div class="page-inner">
+
+      <span class="page-eyebrow">Legal</span>
+      <h1 class="page-title">Privacy Policy</h1>
+      <span class="page-date">Last updated: May 2026</span>
+
+      <div class="policy-section">
+        <p class="policy-heading">Who we are</p>
+        <p class="policy-body">IGAN VNTG is operated by Saijal Nagi, based in Toronto, Canada. We are a discovery platform for luxury vintage from independent boutiques worldwide. You can reach us at <a href="mailto:hello@iganvntg.com">hello@iganvntg.com</a>.</p>
+      </div>
+
+      <div class="policy-section">
+        <p class="policy-heading">What we collect</p>
+        <p class="policy-body">When you join our waitlist or submit an enquiry, we collect the information you provide — which may include your name, email address, country, and any other details you choose to share.</p>
+        <p class="policy-body">We do not collect payment information. We do not sell your data. We do not share your data with third parties except where required to operate the platform — for example, storing form submissions in Google Sheets via Google Apps Script.</p>
+      </div>
+
+      <div class="policy-section">
+        <p class="policy-heading">How we use it</p>
+        <p class="policy-body">We use the information you provide solely to contact you about IGAN VNTG — including early access, platform updates, and launch announcements in your country. We will never send you unrelated marketing.</p>
+      </div>
+
+      <div class="policy-section">
+        <p class="policy-heading">Your rights</p>
+        <p class="policy-body">You have the right to access, correct, or request deletion of any personal information we hold about you. To exercise these rights, email us at <a href="mailto:hello@iganvntg.com">hello@iganvntg.com</a> and we will respond within 30 days.</p>
+        <p class="policy-body">If you are located in Canada, this policy is governed by the Personal Information Protection and Electronic Documents Act (PIPEDA). If you are located in the European Union or United Kingdom, this policy is governed by the General Data Protection Regulation (GDPR).</p>
+      </div>
+
+      <div class="policy-section">
+        <p class="policy-heading">Cookies</p>
+        <p class="policy-body">We do not currently use tracking cookies or third-party analytics. If this changes, we will update this policy and notify you.</p>
+      </div>
+
+      <div class="policy-section">
+        <p class="policy-heading">Changes to this policy</p>
+        <p class="policy-body">We may update this policy as the platform grows. The date at the top of this page reflects the most recent update. Continued use of the platform after changes constitutes acceptance of the updated policy.</p>
+      </div>
+
+      <div class="policy-section">
+        <p class="policy-heading">Contact</p>
+        <p class="policy-body">Questions about this policy? Email <a href="mailto:hello@iganvntg.com">hello@iganvntg.com</a>. We'll respond within 30 days.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-copy">© 2026 IGAN VNTG. All rights reserved.</p>
+    <a href="/" class="footer-copy" style="border-bottom: 1px solid var(--c-border);">iganvntg.com</a>
+  </footer>
+
+</body>
+</html>
