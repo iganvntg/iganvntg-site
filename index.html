@@ -13,22 +13,19 @@
   <style>
     /* ─────────────────────────────────────────────
        DESIGN TOKENS
-       Warm linen palette — zero accent colour.
-       Depth is created by whitespace, not decoration.
     ───────────────────────────────────────────── */
     :root {
-      --c-bg:           #F7F5F1;   /* warm linen */
-      --c-surface:      #F0EDE7;   /* slightly darker for alternating surfaces */
-      --c-fg:           #1A1917;   /* near-black, warm */
-      --c-fg-2:         #8A857D;   /* secondary text, captions */
-      --c-fg-3:         #B8B3AB;   /* tertiary — metadata, legal */
-      --c-border:       #E0DAD1;   /* default hairline */
-      --c-border-2:     #C8C1B6;   /* stronger divider */
+      --c-bg:           #F7F5F1;
+      --c-surface:      #F0EDE7;
+      --c-fg:           #1A1917;
+      --c-fg-2:         #8A857D;
+      --c-fg-3:         #B8B3AB;
+      --c-border:       #E0DAD1;
+      --c-border-2:     #C8C1B6;
 
       --f-serif:        'Cormorant Garamond', Georgia, 'Times New Roman', serif;
       --f-sans:         'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-      /* Spatial scale — every spacing is a multiple of 8 */
       --sp-1:  8px;
       --sp-2:  16px;
       --sp-3:  24px;
@@ -95,7 +92,6 @@
 
     /* ─────────────────────────────────────────────
        SCROLL REVEAL
-       Translation is 10px only — luxury whispers.
     ───────────────────────────────────────────── */
     .reveal {
       opacity: 0;
@@ -111,7 +107,7 @@
     .reveal-delay-3 { transition-delay: 360ms; }
 
     /* ─────────────────────────────────────────────
-       SHARED TYPOGRAPHY PRIMITIVES
+       SHARED TYPOGRAPHY
     ───────────────────────────────────────────── */
     .t-eyebrow {
       font-family: var(--f-sans);
@@ -179,7 +175,6 @@
       align-items: center;
     }
 
-    /* primary nav — left */
     .nav-primary {
       display: flex;
       align-items: center;
@@ -196,31 +191,24 @@
     .nav-primary a::after {
       content: '';
       position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1px;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
       background: var(--c-fg);
       transition: width 280ms var(--ease);
     }
     .nav-primary a:hover::after { width: 100%; }
 
-    /* wordmark — center
-       Two words. Generous tracking on each.
-       The word-space carries its own pause —
-       no text-indent compensation needed. */
     .wordmark {
       font-family: var(--f-sans);
       font-size: 12px;
       font-weight: 200;
       letter-spacing: 0.42em;
-      text-transform: uppercase;
       word-spacing: 0.55em;
+      text-transform: uppercase;
       color: var(--c-fg);
     }
     .wordmark:hover { opacity: 0.55; transition: opacity 240ms var(--ease); }
 
-    /* utility nav — right */
     .nav-utility {
       display: flex;
       align-items: center;
@@ -236,7 +224,6 @@
     }
     .nav-utility a:hover { color: var(--c-fg-2); }
 
-    /* mobile toggle (hidden on desktop) */
     .nav-hamburger {
       display: none;
       flex-direction: column;
@@ -246,13 +233,124 @@
     .nav-hamburger span {
       display: block; width: 20px; height: 1px;
       background: var(--c-fg);
+      transition: opacity 200ms var(--ease);
     }
 
     /* ─────────────────────────────────────────────
+       MOBILE NAV DRAWER — mobile only
+    ───────────────────────────────────────────── */
+    #mob-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: var(--c-bg);
+      flex-direction: column;
+      padding: 0 var(--gutter);
+      opacity: 0;
+      transition: opacity 320ms var(--ease);
+      overflow-y: auto;
+    }
+    #mob-drawer.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .mob-drawer-header {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--c-border);
+      flex-shrink: 0;
+    }
+
+    .mob-drawer-wordmark {
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 0.42em;
+      word-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+    }
+
+    .mob-drawer-close {
+      font-size: 22px;
+      color: var(--c-fg-3);
+      padding: 4px;
+      line-height: 1;
+      transition: color 200ms;
+    }
+    .mob-drawer-close:hover { color: var(--c-fg); }
+
+    .mob-drawer-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+      padding: var(--sp-8) 0;
+    }
+
+    .mob-drawer-link {
+      display: block;
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.75rem, 7vw, 2.25rem);
+      color: var(--c-fg);
+      line-height: 1.2;
+      padding: 0.6em 0;
+      border-bottom: 1px solid var(--c-border);
+      transition: color 200ms var(--ease), padding-left 240ms var(--ease);
+      letter-spacing: -0.01em;
+    }
+    .mob-drawer-link:first-child { border-top: 1px solid var(--c-border); }
+    .mob-drawer-link:hover {
+      color: var(--c-fg-2);
+      padding-left: 8px;
+    }
+
+    .mob-drawer-link.small {
+      font-family: var(--f-sans);
+      font-style: normal;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-fg-3);
+      padding: 0.9em 0;
+    }
+    .mob-drawer-link.small:hover {
+      color: var(--c-fg-2);
+      padding-left: 8px;
+    }
+
+    .mob-drawer-cta {
+      flex-shrink: 0;
+      padding: var(--sp-4) 0 var(--sp-6);
+      border-top: 1px solid var(--c-border);
+    }
+
+    #mob-request-access {
+      width: 100%;
+      background: var(--c-fg);
+      color: var(--c-bg);
+      border: none;
+      padding: 1rem;
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 200ms;
+    }
+    #mob-request-access:hover { opacity: 0.8; }
+
+    /* ─────────────────────────────────────────────
        SEARCH HERO
-       The homepage is the search.
-       Wordmark · Descriptor · Input · Examples
-       Nothing competes. Nothing decorates.
     ───────────────────────────────────────────── */
     .search-hero {
       min-height: calc(100dvh - 60px - 41px);
@@ -295,8 +393,6 @@
       margin-bottom: var(--sp-12);
     }
 
-    /* search-form, search-input, search-btn, search-hint: below */
-
     .search-examples {
       margin-top: var(--sp-4);
       display: flex;
@@ -331,8 +427,184 @@
       gap: var(--sp-8);
     }
 
+    /* ─────────────────────────────────────────────
+       SEARCH FORM
+    ───────────────────────────────────────────── */
+    .search-form {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--c-fg);
+      transition: border-color 240ms var(--ease);
+      gap: var(--sp-3);
+    }
 
+    .search-input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      padding: var(--sp-3) 0;
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      color: var(--c-fg);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      width: 100%;
+    }
+    .search-input::placeholder {
+      color: var(--c-fg-2);
+      transition: opacity 400ms var(--ease);
+    }
+    .search-input.placeholder-fade::placeholder { opacity: 0; }
 
+    .search-btn {
+      flex-shrink: 0;
+      padding: var(--sp-3) 0 var(--sp-3) var(--sp-3);
+      color: var(--c-fg-2);
+      transition: color 220ms var(--ease);
+      display: flex;
+      align-items: center;
+    }
+    .search-btn:hover { color: var(--c-fg); }
+
+    .search-hint {
+      margin-top: var(--sp-3);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-fg-3);
+      font-family: var(--f-sans);
+      font-style: normal;
+    }
+
+    /* ─────────────────────────────────────────────
+       EMPTY SEARCH STATE
+    ───────────────────────────────────────────── */
+    #search-empty-state {
+      display: none;
+      margin-top: var(--sp-6);
+      padding: var(--sp-4) var(--sp-4);
+      border: 1px solid var(--c-border);
+      text-align: center;
+      animation: iv-rise 0.3s var(--ease);
+    }
+    .search-empty-headline {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: var(--c-fg);
+      margin-bottom: 0.4rem;
+    }
+    .search-empty-body {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      line-height: 1.75;
+      margin-bottom: var(--sp-3);
+    }
+    .search-empty-link {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      border-bottom: 1px solid var(--c-fg);
+      padding-bottom: 2px;
+      transition: opacity 200ms;
+    }
+    .search-empty-link:hover { opacity: 0.45; }
+
+    /* ─────────────────────────────────────────────
+       REQUEST ACCESS CTA
+    ───────────────────────────────────────────── */
+    .request-access-wrap {
+      padding: var(--sp-8) var(--gutter) var(--sp-4);
+      text-align: center;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    #iv-trigger {
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      background: none;
+      border: none;
+      border-bottom: 1px solid var(--c-fg);
+      padding-bottom: 3px;
+      cursor: pointer;
+      transition: opacity 220ms var(--ease);
+    }
+    #iv-trigger:hover { opacity: 0.45; }
+
+    /* ─────────────────────────────────────────────
+       FOUNDER NOTE
+    ───────────────────────────────────────────── */
+    .founder-section {
+      padding: var(--sp-16) var(--gutter);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .founder-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .founder-eyebrow {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-fg-3);
+      margin-bottom: var(--sp-6);
+      display: block;
+    }
+
+    .founder-text {
+      font-family: var(--f-serif);
+      font-weight: 300;
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
+      color: var(--c-fg-2);
+      line-height: 1.9;
+      margin-bottom: 1.1em;
+    }
+
+    .founder-text em {
+      font-style: italic;
+      color: var(--c-fg);
+    }
+
+    .founder-text strong {
+      font-weight: 400;
+      color: var(--c-fg);
+      font-style: normal;
+    }
+
+    .founder-sig {
+      font-family: var(--f-serif);
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      margin-top: var(--sp-4);
+      display: block;
+    }
+
+    .founder-ps {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--c-fg-3);
+      margin-top: 6px;
+      display: block;
+    }
 
     /* ─────────────────────────────────────────────
        BROWSE DESIGNERS
@@ -366,7 +638,6 @@
 
     /* ─────────────────────────────────────────────
        BOUTIQUE STRIP
-       One line. One link. Doesn't interrupt shoppers.
     ───────────────────────────────────────────── */
     .boutique-strip {
       border-top: 1px solid var(--c-border);
@@ -386,7 +657,6 @@
       letter-spacing: 0.03em;
     }
 
-    /* Arrow CTA — animated extension */
     .arrow-cta {
       display: inline-flex;
       align-items: center;
@@ -407,228 +677,6 @@
       transition: width 260ms var(--ease);
     }
     .arrow-cta:hover .arrow-cta-line { width: 32px; }
-
-
-    /* ─────────────────────────────────────────────
-       SEARCH FORM — shared between hero and any
-       future search surfaces
-    ───────────────────────────────────────────── */
-    .search-form {
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid var(--c-fg);
-      transition: border-color 240ms var(--ease);
-      gap: var(--sp-3);
-    }
-    .search-form:focus-within {
-      border-bottom-color: var(--c-fg);
-    }
-
-    .search-input {
-      flex: 1;
-      background: none;
-      border: none;
-      outline: none;
-      padding: var(--sp-3) 0;
-      font-family: var(--f-serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(1.125rem, 2vw, 1.5rem);
-      color: var(--c-fg);
-      letter-spacing: -0.01em;
-      line-height: 1.2;
-      width: 100%;
-    }
-    .search-input::placeholder {
-      color: var(--c-fg-2);
-      transition: opacity 400ms var(--ease);
-    }
-    .search-input.placeholder-fade::placeholder {
-      opacity: 0;
-    }
-
-    .search-btn {
-      flex-shrink: 0;
-      padding: var(--sp-3) 0 var(--sp-3) var(--sp-3);
-      color: var(--c-fg-2);
-      transition: color 220ms var(--ease);
-      display: flex;
-      align-items: center;
-    }
-    .search-btn:hover { color: var(--c-fg); }
-
-    .search-hint {
-      margin-top: var(--sp-3);
-      font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--c-fg-3);
-      font-family: var(--f-sans);
-      font-style: normal;
-    }
-
-
-    /* ─────────────────────────────────────────────
-       HOW SEARCH WORKS
-       The product pitch, told through examples.
-       Each card is a real query a buyer types.
-    ───────────────────────────────────────────── */
-    .search-works {
-      padding: var(--sp-16) var(--gutter);
-      border-top: 1px solid var(--c-border);
-    }
-    .search-works-inner { max-width: var(--max-w); margin: 0 auto; }
-
-    .search-works-header {
-      max-width: 640px;
-      margin-bottom: var(--sp-12);
-    }
-    .search-works-headline {
-      font-family: var(--f-serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(2rem, 2.75vw, 3rem);
-      line-height: 1.15;
-      color: var(--c-fg);
-      margin-top: var(--sp-3);
-      margin-bottom: var(--sp-4);
-    }
-    .search-works-sub {
-      font-size: 14px;
-      font-weight: 300;
-      color: var(--c-fg-2);
-      line-height: 1.85;
-    }
-
-    .search-example-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      border-top: 1px solid var(--c-border);
-      border-left: 1px solid var(--c-border);
-    }
-    .search-example-card {
-      border-right: 1px solid var(--c-border);
-      border-bottom: 1px solid var(--c-border);
-      padding: var(--sp-8) var(--sp-6);
-    }
-    .search-example-query {
-      font-family: var(--f-serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(1.125rem, 1.75vw, 1.5rem);
-      color: var(--c-fg);
-      line-height: 1.3;
-      margin-bottom: var(--sp-3);
-    }
-    .search-example-desc {
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--c-fg-2);
-      line-height: 1.8;
-    }
-
-    /* ─────────────────────────────────────────────
-       WHAT LISTING INCLUDES
-       Tell boutiques exactly what they get.
-       No vague promises — specific deliverables.
-    ───────────────────────────────────────────── */
-    .listing-includes {
-      padding: var(--sp-16) var(--gutter);
-      border-top: 1px solid var(--c-border);
-    }
-    .listing-includes-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: var(--sp-16);
-      align-items: start;
-    }
-    .listing-heading {
-      font-size: clamp(2rem, 2.5vw, 3rem);
-      margin-top: var(--sp-6);
-    }
-
-    .listing-items {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .listing-item {
-      padding: var(--sp-6) var(--sp-6) var(--sp-6) 0;
-      border-top: 1px solid var(--c-border);
-    }
-    .listing-item:nth-child(even) {
-      padding-left: var(--sp-6);
-      padding-right: 0;
-      border-left: 1px solid var(--c-border);
-    }
-    .listing-item-label {
-      font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--c-fg-2);
-      margin-bottom: var(--sp-2);
-      font-family: var(--f-sans);
-    }
-    .listing-item-desc {
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--c-fg);
-      line-height: 1.75;
-    }
-
-    /* ─────────────────────────────────────────────
-       SELL WITH US
-    ───────────────────────────────────────────── */
-    .sell-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-top: 1px solid var(--c-border);
-      min-height: 640px;
-    }
-
-    .sell-img {
-      overflow: hidden;
-    }
-    .sell-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-
-    .sell-body {
-      background: var(--c-surface);
-      padding: var(--sp-16) var(--sp-12);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .sell-title {
-      font-size: clamp(2rem, 2.75vw, 3.25rem);
-      margin: var(--sp-4) 0 var(--sp-4);
-    }
-
-    .sell-copy {
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--c-fg-2);
-      line-height: 1.9;
-      max-width: 400px;
-      margin-bottom: var(--sp-8);
-    }
-
-    .sell-links {
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-3);
-      align-items: flex-start;
-    }
-
 
     /* ─────────────────────────────────────────────
        FOOTER
@@ -714,6 +762,165 @@
     .footer-legal a:hover { color: var(--c-fg-2); }
 
     /* ─────────────────────────────────────────────
+       MODAL
+    ───────────────────────────────────────────── */
+    #iv-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,25,23,0.5);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(2px);
+    }
+    #iv-overlay.open { display: flex; }
+
+    #iv-modal {
+      background: var(--c-bg);
+      max-width: 420px;
+      width: 100%;
+      padding: 2.75rem 2.5rem 2.25rem;
+      position: relative;
+      animation: iv-rise 0.3s var(--ease);
+      border: 1px solid var(--c-border);
+    }
+    @keyframes iv-rise {
+      from { opacity:0; transform: translateY(14px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    #iv-close {
+      position: absolute;
+      top: 1.25rem; right: 1.25rem;
+      background: none; border: none;
+      cursor: pointer;
+      color: var(--c-fg-3);
+      font-size: 18px;
+      line-height: 1;
+      padding: 4px;
+      transition: color 200ms;
+    }
+    #iv-close:hover { color: var(--c-fg); }
+
+    .iv-modal-label {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--c-fg-3);
+      text-transform: uppercase;
+      margin: 0 0 1.5rem;
+      display: block;
+    }
+
+    .iv-modal-headline {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--c-fg);
+      margin: 0 0 0.5rem;
+      line-height: 1.3;
+    }
+
+    .iv-modal-body {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      line-height: 1.8;
+      margin: 0 0 2rem;
+    }
+
+    .iv-field {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--c-border);
+      padding: 0.65rem 0;
+      font-size: 13px;
+      font-family: var(--f-sans);
+      font-weight: 300;
+      color: var(--c-fg);
+      outline: none;
+      margin-bottom: 1.1rem;
+      transition: border-color 220ms;
+    }
+    .iv-field:focus { border-color: var(--c-fg-2); }
+    .iv-field::placeholder { color: var(--c-fg-3); }
+
+    select.iv-field {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      color: var(--c-fg-3);
+    }
+    select.iv-field.has-value { color: var(--c-fg); }
+
+    .iv-privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .iv-privacy input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: var(--c-fg);
+      flex-shrink: 0;
+    }
+    .iv-privacy label {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--c-fg-3);
+      line-height: 1.6;
+    }
+    .iv-privacy a {
+      color: var(--c-fg-2);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .iv-privacy a:hover { color: var(--c-fg); }
+
+    #iv-submit {
+      width: 100%;
+      background: var(--c-fg);
+      color: var(--c-bg);
+      border: none;
+      padding: 0.9rem;
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 200ms;
+    }
+    #iv-submit:hover:not(:disabled) { opacity: 0.8; }
+    #iv-submit:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    #iv-error {
+      display: none;
+      font-size: 11px;
+      color: #9b3535;
+      margin-top: 0.75rem;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    #iv-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    #iv-success p {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--c-fg);
+      letter-spacing: 0.02em;
+    }
+
+    /* ─────────────────────────────────────────────
        RESPONSIVE
     ───────────────────────────────────────────── */
     @media (max-width: 1280px) {
@@ -730,20 +937,21 @@
 
     @media (max-width: 768px) {
       :root { --gutter: 24px; --sp-16: 96px; }
-
       .nav-primary, .nav-utility { display: none; }
       .nav-hamburger { display: flex; }
       .nav-shell { grid-template-columns: 40px 1fr 40px; }
-
       .search-hero { padding: var(--sp-8) var(--gutter); }
       .search-browse-links { gap: var(--sp-4); }
-
       .designers-list { grid-template-columns: repeat(2, 1fr); }
       .boutique-strip-inner { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
-
       .footer-top { grid-template-columns: 1fr 1fr; gap: var(--sp-8); }
       .footer-top > :first-child { grid-column: 1 / -1; }
       .footer-bottom { flex-direction: column; align-items: flex-start; gap: var(--sp-3); }
+      #iv-modal { padding: 2.25rem 1.75rem 2rem; }
+    }
+
+    @media (min-width: 769px) {
+      #mob-drawer { display: none !important; }
     }
 
     @media (max-width: 480px) {
@@ -785,7 +993,7 @@
 
       <nav aria-label="Utility navigation">
         <ul class="nav-utility">
-          <li><a href="#" aria-label="Search the archive">Search</a></li>
+          <li><a href="#" aria-label="Search">Search</a></li>
           <li><a href="#" aria-label="Saved pieces">Saved</a></li>
           <li><a href="#" aria-label="Your account">Account</a></li>
           <li><a href="#" aria-label="Shopping bag, 0 items">Bag (0)</a></li>
@@ -804,8 +1012,6 @@
 
     <!-- ══════════════════════════════════════════
          SEARCH HERO
-         The homepage is the search.
-         Wordmark · Descriptor · Input · Examples
     ══════════════════════════════════════════ -->
     <section class="search-hero" aria-label="Search IGAN VNTG">
       <div class="search-hero-inner">
@@ -813,7 +1019,7 @@
         <span class="search-hero-wordmark" aria-hidden="true">IGAN VNTG</span>
 
         <p class="search-hero-descriptor">
-          Search designer vintage across boutiques.
+          Discover designer vintage from independent boutiques.
         </p>
 
         <form class="search-form" role="search" action="#" method="get" id="main-search" style="width:100%;">
@@ -839,7 +1045,13 @@
           Designer &nbsp;·&nbsp; Collection &nbsp;·&nbsp; Colour &nbsp;·&nbsp; Year &nbsp;·&nbsp; City &nbsp;·&nbsp; Country &nbsp;·&nbsp; Boutique &nbsp;·&nbsp; Price &nbsp;·&nbsp; Condition
         </p>
 
-        <div class="search-examples" role="list" aria-label="Example searches — click to try">
+        <div id="search-empty-state" role="status" aria-live="polite">
+          <p class="search-empty-headline">We're onboarding our first boutiques now.</p>
+          <p class="search-empty-body">Be among the first to be found here.</p>
+          <a href="sell.html" class="search-empty-link">List your boutique</a>
+        </div>
+
+        <div class="search-examples" role="list" aria-label="Example searches">
           <button class="search-example" type="button" role="listitem">Margiela for Hermès under $4,000</button>
           <button class="search-example" type="button" role="listitem">Chanel Resort 2013</button>
           <button class="search-example" type="button" role="listitem">Black Chanel bag Toronto under $3,000</button>
@@ -854,7 +1066,73 @@
       </div>
     </section>
 
-    <!-- Browse Designers -->
+    <!-- ══════════════════════════════════════════
+         REQUEST ACCESS CTA
+         Quiet. One line. Below the hero.
+    ══════════════════════════════════════════ -->
+    <div class="request-access-wrap">
+      <button id="iv-trigger" aria-haspopup="dialog">
+        Request access
+      </button>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         FOUNDER NOTE
+         Placed below the CTA. Maximum openness.
+    ══════════════════════════════════════════ -->
+    <section class="founder-section reveal" aria-label="A note from the founder">
+      <div class="founder-inner">
+
+        <span class="founder-eyebrow">A note from the founder</span>
+
+        <p class="founder-text"><em>I was supposed to be at brunch.</em></p>
+
+        <p class="founder-text">
+          Instead I ended up in a vintage store with my sister — somewhere in Toronto,
+          a city I've been figuring out for four years — and found something I'd been
+          searching for for months. Exactly what I wanted, from a boutique I'd never
+          heard of, three kilometres from my apartment.
+        </p>
+
+        <p class="founder-text">I started talking to a group of women in the store.</p>
+
+        <p class="founder-text">
+          Different cities. Different countries. Same problem — hours lost,
+          twenty-seven tabs open, DM'ing store pages on Instagram, watching things
+          sell out before they could even get to checkout.
+        </p>
+
+        <p class="founder-text">
+          The boutiques were incredible. The inventory was incredible.
+          <strong>They weren't unknown. They were undiscoverable.</strong>
+        </p>
+
+        <p class="founder-text">
+          This is not a Toronto problem. This is not a Canada problem. Extraordinary
+          boutiques exist in every city in the world and the right buyer will never
+          find them simply because there is no single place to look.
+        </p>
+
+        <p class="founder-text">
+          I have ADHD. I hyperfixate — and once I saw that problem I couldn't unsee it.
+        </p>
+
+        <p class="founder-text">The buyer and the boutique both deserve better.</p>
+
+        <p class="founder-text">
+          IGAN VNTG is built for the buyer with twenty-seven tabs open
+          and the boutique that should be on all of them.
+        </p>
+
+        <span class="founder-sig">— Saijal</span>
+        <span class="founder-ps">P.S. I'm still that girl in the store. I just built the thing I was looking for.</span>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         BROWSE DESIGNERS
+    ══════════════════════════════════════════ -->
     <section class="browse-designers reveal" aria-labelledby="designers-id">
       <div class="browse-designers-inner">
         <div class="browse-designers-header">
@@ -884,7 +1162,6 @@
         <a href="sell.html" class="t-link-underline">List your boutique on IGAN VNTG</a>
       </div>
     </div>
-
 
   </main>
 
@@ -922,10 +1199,19 @@
         <nav aria-label="Company navigation">
           <span class="footer-col-label">Company</span>
           <ul class="footer-links">
-            <li><a href="#">About</a></li>
+            <li><a href="our-story.html">Our Story</a></li>
             <li><a href="#">Press</a></li>
-            <li><a href="#">Shipping & Returns</a></li>
+            <li><a href="#">Shipping &amp; Returns</a></li>
             <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Legal navigation">
+          <span class="footer-col-label">Legal</span>
+          <ul class="footer-links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Cookies</a></li>
           </ul>
         </nav>
 
@@ -934,7 +1220,7 @@
       <div class="footer-bottom">
         <p class="footer-copyright">© 2025 IGAN VNTG. All rights reserved.</p>
         <ul class="footer-legal" aria-label="Legal links">
-          <li><a href="#">Privacy</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
           <li><a href="#">Terms</a></li>
           <li><a href="#">Cookies</a></li>
         </ul>
@@ -942,10 +1228,118 @@
     </div>
   </footer>
 
+  <!-- ══════════════════════════════════════════
+       MODAL
+  ══════════════════════════════════════════ -->
+  <div id="iv-overlay" role="dialog" aria-modal="true" aria-labelledby="iv-modal-headline">
+
+    <div id="iv-modal">
+
+      <button id="iv-close" aria-label="Close">&times;</button>
+
+      <!-- Form -->
+      <div id="iv-form-state">
+        <span class="iv-modal-label">Early access</span>
+        <h2 class="iv-modal-headline" id="iv-modal-headline">
+          You're early. So are the best pieces.
+        </h2>
+        <p class="iv-modal-body">
+          Be notified first when boutiques go live in your country.
+        </p>
+
+        <input
+          class="iv-field"
+          id="iv-email"
+          type="email"
+          placeholder="your@email.com"
+          required
+          autocomplete="email"
+          aria-label="Email address"
+        />
+
+        <select class="iv-field" id="iv-country" aria-label="Country (optional)">
+          <option value="" disabled selected>Country (optional)</option>
+          <option>Australia</option>
+          <option>Austria</option>
+          <option>Belgium</option>
+          <option>Brazil</option>
+          <option>Canada</option>
+          <option>China</option>
+          <option>Denmark</option>
+          <option>Finland</option>
+          <option>France</option>
+          <option>Germany</option>
+          <option>Greece</option>
+          <option>Hong Kong</option>
+          <option>India</option>
+          <option>Ireland</option>
+          <option>Italy</option>
+          <option>Japan</option>
+          <option>Mexico</option>
+          <option>Netherlands</option>
+          <option>New Zealand</option>
+          <option>Norway</option>
+          <option>Portugal</option>
+          <option>Saudi Arabia</option>
+          <option>Singapore</option>
+          <option>South Korea</option>
+          <option>Spain</option>
+          <option>Sweden</option>
+          <option>Switzerland</option>
+          <option>UAE</option>
+          <option>United Kingdom</option>
+          <option>United States</option>
+          <option>Other</option>
+        </select>
+
+        <div class="iv-privacy">
+          <input type="checkbox" id="iv-consent" />
+          <label for="iv-consent">
+            I agree to the <a href="privacy.html" target="_blank">privacy policy</a>.
+            No newsletters. No noise. Just access.
+          </label>
+        </div>
+
+        <button id="iv-submit" disabled>Secure my place</button>
+        <p id="iv-error">Something went wrong. Please try again.</p>
+      </div>
+
+      <!-- Success -->
+      <div id="iv-success" role="status" aria-live="polite">
+        <p>You're on the list.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       MOBILE NAV DRAWER
+  ══════════════════════════════════════════ -->
+  <nav id="mob-drawer" aria-label="Mobile navigation" aria-hidden="true">
+
+    <div class="mob-drawer-header">
+      <span class="mob-drawer-wordmark" aria-hidden="true">IGAN VNTG</span>
+      <button class="mob-drawer-close" id="mob-close" aria-label="Close menu">&times;</button>
+    </div>
+
+    <div class="mob-drawer-nav">
+      <a href="#" class="mob-drawer-link">Browse Boutiques</a>
+      <a href="#" class="mob-drawer-link">Browse Designers</a>
+      <a href="sell.html" class="mob-drawer-link">Sell With Us</a>
+      <a href="privacy.html" class="mob-drawer-link small">Privacy Policy</a>
+    </div>
+
+    <div class="mob-drawer-cta">
+      <button id="mob-request-access">Request access</button>
+    </div>
+
+  </nav>
+
+
   <script>
     'use strict';
 
-    /* ── Scroll Reveal ─────────────────────────────── */
+    /* ── Scroll Reveal ─────────────────────────── */
     (function () {
       var els = document.querySelectorAll('.reveal');
       if (!('IntersectionObserver' in window)) {
@@ -963,7 +1357,7 @@
       els.forEach(function (el) { io.observe(el); });
     }());
 
-    /* ── Header scroll state ───────────────────────── */
+    /* ── Header scroll state ───────────────────── */
     (function () {
       var hdr = document.getElementById('site-header');
       if (!hdr) return;
@@ -977,18 +1371,101 @@
       }, { passive: true });
     }());
 
-    /* ── Mobile hamburger ──────────────────────────── */
+    /* ── Mobile nav drawer ─────────────────────── */
     (function () {
-      var btn = document.querySelector('.nav-hamburger');
-      if (!btn) return;
-      btn.addEventListener('click', function () {
-        var open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        /* In production: open a full-screen drawer */
+      var drawer     = document.getElementById('mob-drawer');
+      var hamburger  = document.querySelector('.nav-hamburger');
+      var closeBtn   = document.getElementById('mob-close');
+      var mobCTA     = document.getElementById('mob-request-access');
+      var mainTrigger = document.getElementById('iv-trigger');
+
+      if (!drawer || !hamburger) return;
+
+      function openDrawer() {
+        drawer.style.display = 'flex';
+        requestAnimationFrame(function () {
+          drawer.classList.add('open');
+        });
+        drawer.setAttribute('aria-hidden', 'false');
+        hamburger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        setTimeout(function () {
+          if (!drawer.classList.contains('open')) {
+            drawer.style.display = 'none';
+          }
+        }, 340);
+        hamburger.focus();
+      }
+
+      hamburger.addEventListener('click', openDrawer);
+      closeBtn.addEventListener('click', closeDrawer);
+
+      /* Tap outside content closes drawer */
+      drawer.addEventListener('click', function (e) {
+        if (e.target === drawer) closeDrawer();
+      });
+
+      /* Escape key */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) {
+          closeDrawer();
+        }
+      });
+
+      /* Request access inside drawer — open modal and close drawer */
+      if (mobCTA && mainTrigger) {
+        mobCTA.addEventListener('click', function () {
+          closeDrawer();
+          setTimeout(function () {
+            mainTrigger.click();
+          }, 360);
+        });
+      }
+    }());
+
+    /* ── Search empty state ────────────────────── */
+    (function () {
+      var form       = document.getElementById('main-search');
+      var emptyState = document.getElementById('search-empty-state');
+      var examples   = document.querySelectorAll('.search-example');
+      var input      = document.getElementById('search-input');
+      if (!form || !emptyState) return;
+
+      function showEmpty() {
+        if (input.value.trim().length > 0) {
+          emptyState.style.display = 'block';
+        }
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        showEmpty();
+      });
+
+      /* Also show when example chips clicked */
+      examples.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          setTimeout(showEmpty, 50);
+        });
+      });
+
+      /* Hide empty state when input is cleared */
+      input.addEventListener('input', function () {
+        if (input.value.trim().length === 0) {
+          emptyState.style.display = 'none';
+        }
       });
     }());
 
-    /* ── Example query click-to-fill ──────────────── */
+    /* ── Example click-to-fill ─────────────────── */
     (function () {
       var examples = document.querySelectorAll('.search-example');
       var input    = document.getElementById('search-input');
@@ -997,18 +1474,16 @@
         btn.addEventListener('click', function () {
           input.value = btn.textContent.trim();
           input.focus();
-          /* Place cursor at end */
           var len = input.value.length;
           input.setSelectionRange(len, len);
         });
       });
     }());
 
-    /* ── Search placeholder cycling ───────────────── */
+    /* ── Placeholder cycling ───────────────────── */
     (function () {
       var input = document.getElementById('search-input');
       if (!input) return;
-
       var examples = [
         'Margiela for Hermès, under $4,000',
         'Chanel Resort 2013',
@@ -1021,12 +1496,10 @@
         'Vintage Hermès in Paris under $2,000',
         'Bottega Veneta in London',
       ];
-
       var current = 0;
       var paused  = false;
-      var DISPLAY = 3800;  /* ms each example is visible */
-      var FADE    = 380;   /* ms fade transition */
-
+      var DISPLAY = 3800;
+      var FADE    = 380;
       function next() {
         if (paused) return;
         input.classList.add('placeholder-fade');
@@ -1036,19 +1509,104 @@
           input.classList.remove('placeholder-fade');
         }, FADE);
       }
-
-      var timer = setInterval(next, DISPLAY);
-
-      /* Pause cycling while user is focused */
-      input.addEventListener('focus',  function () { paused = true; });
-      input.addEventListener('blur',   function () {
+      setInterval(next, DISPLAY);
+      input.addEventListener('focus', function () { paused = true; });
+      input.addEventListener('blur',  function () {
         paused = false;
         if (!input.value) {
           input.classList.add('placeholder-fade');
-          setTimeout(function () {
-            input.classList.remove('placeholder-fade');
-          }, FADE);
+          setTimeout(function () { input.classList.remove('placeholder-fade'); }, FADE);
         }
+      });
+    }());
+
+    /* ── Waitlist Modal ────────────────────────── */
+    (function () {
+      var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSMh83WudOwiE-bstaPnDexqULSkLEHuBRRNfk_0DJUw4_VUUYhT7DjYmGGtHs6Wb-/exec';
+
+      var overlay    = document.getElementById('iv-overlay');
+      var trigger    = document.getElementById('iv-trigger');
+      var closeBtn   = document.getElementById('iv-close');
+      var submit     = document.getElementById('iv-submit');
+      var consent    = document.getElementById('iv-consent');
+      var country    = document.getElementById('iv-country');
+      var formState  = document.getElementById('iv-form-state');
+      var successEl  = document.getElementById('iv-success');
+      var errorEl    = document.getElementById('iv-error');
+
+      /* Open */
+      trigger.addEventListener('click', function () {
+        overlay.classList.add('open');
+        document.getElementById('iv-email').focus();
+        document.body.style.overflow = 'hidden';
+      });
+
+      /* Close */
+      function closeModal() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      /* Enable submit on consent */
+      consent.addEventListener('change', function () {
+        submit.disabled = !consent.checked;
+      });
+
+      /* Style select */
+      country.addEventListener('change', function () {
+        country.classList.toggle('has-value', country.value !== '');
+      });
+
+      /* Submit */
+      submit.addEventListener('click', function () {
+        var email = document.getElementById('iv-email').value.trim();
+
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          document.getElementById('iv-email').focus();
+          return;
+        }
+
+        submit.disabled = true;
+        submit.textContent = 'Securing…';
+        errorEl.style.display = 'none';
+
+        /* Capture UTM params */
+        var params = new URLSearchParams(window.location.search);
+        var payload = {
+          sheet:     'Waitlist',
+          type:      'waitlist',
+          source:    'homepage_modal',
+          timestamp: new Date().toISOString(),
+          email:     email,
+          country:   country.value || ''
+        };
+        ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function (k) {
+          if (params.get(k)) payload[k] = params.get(k);
+        });
+
+        fetch(SCRIPT_URL, {
+          method:  'POST',
+          mode:    'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload)
+        })
+        .then(function () {
+          formState.style.display = 'none';
+          successEl.style.display = 'block';
+        })
+        .catch(function () {
+          submit.disabled = false;
+          submit.textContent = 'Secure my place';
+          errorEl.style.display = 'block';
+        });
       });
     }());
 
