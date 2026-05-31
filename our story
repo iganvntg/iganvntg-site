@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The story behind IGAN VNTG — why Saijal Nagi built the search engine for luxury vintage from independent boutiques worldwide." />
+  <title>Our Story — IGAN VNTG</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --c-bg:       #F7F5F1;
+      --c-fg:       #1A1917;
+      --c-fg-2:     #8A857D;
+      --c-fg-3:     #B8B3AB;
+      --c-border:   #E0DAD1;
+      --f-serif:    'Cormorant Garamond', Georgia, serif;
+      --f-sans:     'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --gutter:     48px;
+      --ease:       cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--c-bg);
+      color: var(--c-fg);
+      font-family: var(--f-sans);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .site-header {
+      border-bottom: 1px solid var(--c-border);
+      padding: 0 var(--gutter);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .wordmark {
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 200;
+      letter-spacing: 0.42em;
+      word-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      transition: opacity 240ms var(--ease);
+    }
+    .wordmark:hover { opacity: 0.55; }
+
+    .back-link {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-fg-2);
+      border-bottom: 1px solid var(--c-border);
+      padding-bottom: 2px;
+      transition: color 200ms;
+    }
+    .back-link:hover { color: var(--c-fg); }
+
+    .page-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 96px var(--gutter) 128px;
+    }
+
+    .page-eyebrow {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--c-fg-3);
+      display: block;
+      margin-bottom: 48px;
+    }
+
+    .founder-text {
+      font-family: var(--f-serif);
+      font-weight: 300;
+      font-size: clamp(1rem, 1.3vw, 1.2rem);
+      color: var(--c-fg-2);
+      line-height: 1.95;
+      margin-bottom: 1.2em;
+    }
+
+    .founder-text em {
+      font-style: italic;
+      color: var(--c-fg);
+    }
+
+    .founder-text strong {
+      font-weight: 400;
+      color: var(--c-fg);
+      font-style: normal;
+    }
+
+    .founder-sig {
+      font-family: var(--f-serif);
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--c-fg-2);
+      margin-top: 48px;
+      display: block;
+    }
+
+    .founder-ps {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--c-fg-3);
+      margin-top: 12px;
+      display: block;
+    }
+
+    .page-cta {
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid var(--c-border);
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-link {
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-fg);
+      border-bottom: 1px solid var(--c-fg);
+      padding-bottom: 2px;
+      transition: opacity 220ms;
+    }
+    .cta-link:hover { opacity: 0.45; }
+
+    .cta-link.secondary {
+      color: var(--c-fg-2);
+      border-color: var(--c-border);
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--c-border);
+      padding: 32px var(--gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 10px;
+      color: var(--c-fg-3);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      :root { --gutter: 24px; }
+      .page-inner { padding: 64px var(--gutter) 96px; }
+      .site-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <a href="/" class="wordmark" aria-label="IGAN VNTG — Return to homepage">IGAN VNTG</a>
+    <a href="/" class="back-link">← Back</a>
+  </header>
+
+  <main>
+    <div class="page-inner">
+
+      <span class="page-eyebrow">A note from the founder</span>
+
+      <p class="founder-text"><em>I was supposed to be at brunch.</em></p>
+
+      <p class="founder-text">
+        Instead I ended up in a vintage store with my sister — somewhere in Toronto,
+        a city I've been figuring out for four years — and found something I'd been
+        searching for for months. Exactly what I wanted, from a boutique I'd never
+        heard of, three kilometres from my apartment.
+      </p>
+
+      <p class="founder-text">I started talking to a group of women in the store.</p>
+
+      <p class="founder-text">
+        Different cities. Different countries. Same problem — hours lost,
+        twenty-seven tabs open, DM'ing store pages on Instagram, watching things
+        sell out before they could even get to checkout.
+      </p>
+
+      <p class="founder-text">
+        The boutiques were incredible. The inventory was incredible.
+        <strong>They weren't unknown. They were undiscoverable.</strong>
+      </p>
+
+      <p class="founder-text">
+        This is not a Toronto problem. This is not a Canada problem. Extraordinary
+        boutiques exist in every city in the world and the right buyer will never
+        find them simply because there is no single place to look.
+      </p>
+
+      <p class="founder-text">
+        I have ADHD. I hyperfixate — and once I saw that problem I couldn't unsee it.
+      </p>
+
+      <p class="founder-text">The buyer and the boutique both deserve better.</p>
+
+      <p class="founder-text">
+        IGAN VNTG is built for the buyer with twenty-seven tabs open
+        and the boutique that should be on all of them.
+      </p>
+
+      <span class="founder-sig">— Saijal Nagi</span>
+      <span class="founder-ps">P.S. I'm still that girl in the store. I just built the thing I was looking for.</span>
+
+      <div class="page-cta">
+        <a href="sell.html" class="cta-link">List your boutique</a>
+        <a href="/" class="cta-link secondary">Back to search</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-copy">© 2026 IGAN VNTG. All rights reserved.</p>
+    <a href="privacy.html" class="footer-copy" style="border-bottom: 1px solid var(--c-border);">Privacy Policy</a>
+  </footer>
+
+</body>
+</html>
